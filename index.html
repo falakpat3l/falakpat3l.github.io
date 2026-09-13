@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Medical device design portfolio — StrideMate wearable exoskeleton, prosthetics and compliant mechanisms. Falak Ameesh Patel.">
+<meta property="og:title" content="Falak Ameesh Patel — Medical Device Design">
+<meta property="og:description" content="Assistive and diagnostic hardware, from clinical need to working prototype.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://falakpatel.com/">
+<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Falak Ameesh Patel — Medical Device Design</title>
+</head>
+<body>
+<style>
+:root{--bg:#fff;--fg:#1a1a1a;--dim:#5c5c5c;--line:#ddd;--lnk:#1a4f7a;--panel:#f6f6f4}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#161616;--fg:#e4e4e2;--dim:#9a9a97;--line:#333;--lnk:#7fb3d8;--panel:#1e1e1e}}
+:root[data-theme=dark]{--bg:#161616;--fg:#e4e4e2;--dim:#9a9a97;--line:#333;--lnk:#7fb3d8;--panel:#1e1e1e}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);margin:0;padding-block:40px;padding-left:20px;padding-right:20px;
+font:17px/1.65 Georgia,"Times New Roman",serif}
+.w{max-width:680px;margin:0 auto}
+h1{font-size:26px;font-weight:normal;margin:0 0 4px}
+h2{font-size:18px;font-weight:bold;margin:38px 0 10px;padding-bottom:4px;border-bottom:1px solid var(--line)}
+h3{font-size:16px;font-weight:bold;margin:20px 0 4px}
+p{margin:0 0 14px}
+a{color:var(--lnk)}
+.sub{color:var(--dim);margin:0 0 6px}
+.meta{color:var(--dim);font-size:15px;margin:0 0 26px}
+.viewer{border:1px solid var(--line);background:var(--panel);margin:14px 0 8px}
+canvas{display:block;width:100%;height:330px;cursor:grab;touch-action:none}
+canvas:active{cursor:grabbing}
+.picks{padding:10px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px}
+.picks button{font:14px/1 Georgia,serif;background:none;border:1px solid var(--line);color:var(--dim);
+padding:5px 9px;cursor:pointer;border-radius:2px}
+.picks button[aria-current=true]{border-color:var(--fg);color:var(--fg)}
+.picks button:focus-visible,a:focus-visible{outline:2px solid var(--lnk);outline-offset:2px}
+.cap{color:var(--dim);font-size:14px;margin:0 0 20px}
+ul{margin:0 0 14px;padding-left:20px}
+li{margin-bottom:7px}
+dl{margin:0 0 16px;display:grid;grid-template-columns:auto 1fr;gap:2px 16px}
+dt{color:var(--dim)}
+dd{margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:var(--dim);font-size:15px}
+@media(max-width:520px){dl{grid-template-columns:1fr;gap:0}dt{margin-top:8px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<div class="w">
+
+<h1>Falak Ameesh Patel</h1>
+<p class="sub">Medical device design — assistive and diagnostic hardware.</p>
+<p class="meta">M.Tech Medical Device Innovation, IIT Hyderabad · B.Pharm, SPPU · Registered pharmacist · Bharuch, Gujarat<br>
+<a href="mailto:falakpat3l@gmail.com">falakpat3l@gmail.com</a> ·
+<a href="https://www.linkedin.com/in/falak-pat3l/">LinkedIn</a> ·
+<a href="https://scholar.google.com/citations?user=s6-Bs10AAAAJ">Scholar</a></p>
+
+<p>I build assistive medical hardware, and I am interested in why so little of it reaches patients. The device is rarely the hard part. The path from a working prototype to something a health system will actually buy and use is where most of these projects stop, including mine.</p>
+
+<h2>StrideMate</h2>
+<p>A wearable lower-limb assistive exoskeleton. My M.Tech thesis at IIT Hyderabad, 2025–26, supervised by Dr Safvan Palathingal and Prof. Renu John.</p>
+
+<div class="viewer">
+  <canvas id="gl"></canvas>
+  <div class="picks" id="picks"></div>
+</div>
+<p class="cap" id="cap">Drag to rotate, scroll to zoom. Geometry simplified for the browser.</p>
+
+<p>The design problem came from a month of clinical immersion at Kamineni Hospital, L.B. Nagar, in December 2024 — orthopaedic and neurology wards, most working days, around 180 hours in total. Patients recovering from stroke or orthopaedic injury depend on a model that does not scale: one physiotherapist, a few patients per session, and no record of what happens between visits.</p>
+<p>The device runs two ESP32 controllers talking over I²C. A time-of-flight sensor on the shin gives a continuous velocity estimate; IMUs supply orientation and gait phase. Together they drive assistive torque during the swing phase. Housings are 3-D printed, thigh links are CNC-machined aluminium, and a browser dashboard logs gait data continuously rather than only moving the leg.</p>
+
+<dl>
+<dt>Mass</dt><dd>under 4 kg</dd>
+<dt>Assistive torque</dt><dd>about 10 N·m, lateral</dd>
+<dt>Target price</dt><dd>₹40,000, against ₹5–60 lakh for imported equivalents</dd>
+<dt>Classification</dt><dd>Class B medical device</dd>
+</dl>
+
+<p>It did not reach anyone. Getting to production needed roughly ₹5 crore in pre-seed capital against established competition, and that money was not available. The venture was wound down and the technology transferred to IIT Hyderabad under institute policy. A device that worked, at a fraction of the imported price, for a market of tens of thousands of patients in India — and none of that was enough. Working out what the gap is actually made of is what I want to do next.</p>
+
+<h2>Other work</h2>
+<ul>
+<li><strong>Transtibial and hip prostheses.</strong> Below-knee prosthesis assembly and hip joint geometry, modelled in Fusion 360.</li>
+<li><strong>Third Thumb.</strong> A 3-D printed extra digit, built to see how quickly someone learns to control a limb they did not grow.</li>
+<li><strong>Compliant thumb.</strong> A single-piece flexure replacing pin joints — fewer parts to fail in a rural supply chain.</li>
+<li><strong>Exoskeleton subassemblies.</strong> Motor housings, hip joints and sensor mounts, designed around parts available in India.</li>
+</ul>
+
+<h2>Writing</h2>
+<ul>
+<li>Patel, F. A. (2023). Quick Response Codes and Near-Field Communication Technology. <em>TANZ Research Journal</em>. DOI 10.6084/doi.23.9.11.TANZ21835. From my B.Pharm project on a QR/NFC system for clinical trial records.</li>
+<li>Co-author, <em>The Microbial World: Exploring the Diversity of Bacteria</em>. Rubicon Publications, 2023.</li>
+<li>Contributing author, <em>Current Approaches on COVID-19 Disease and Therapeutic Benefits of Phytocompounds</em>. Weser Books, 2022.</li>
+</ul>
+
+<h2>Background</h2>
+<p>Biodesign, clinical immersion, device standards and regulation, and IP at IIT Hyderabad. Biostatistics and research methodology, and pharmaceutical jurisprudence, at SPPU. Before that, regulatory affairs (FDA and EMA dossiers), quality assurance under GMP, and market research using surveys and focus groups.</p>
+
+<footer>StrideMate IP is held by IIT Hyderabad. Shown here to demonstrate the work, not for commercial use.</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+var P=[["exo-assembly","Assembly"],["exo-exterior","Shell"],["hip-joint","Hip joint"],["motor-housing","Motor housing"],
+["tof-mount","Sensor mount"],["transtibial","Prosthesis"],["third-thumb","Third Thumb"],["compliant-thumb","Flexure"]];
+var c=document.getElementById("gl"),cap=document.getElementById("cap"),R,S,C,M,yaw=.6,pit=.3,d=2.9,
+spin=!matchMedia("(prefers-reduced-motion: reduce)").matches;
+R=new THREE.WebGLRenderer({canvas:c,antialias:true,alpha:true});R.setPixelRatio(Math.min(devicePixelRatio,2));
+S=new THREE.Scene();C=new THREE.PerspectiveCamera(34,1,.05,100);
+S.add(new THREE.AmbientLight(0xffffff,.6));
+var l1=new THREE.DirectionalLight(0xffffff,.8);l1.position.set(3,4,5);S.add(l1);
+var l2=new THREE.DirectionalLight(0xffffff,.35);l2.position.set(-4,-1,2);S.add(l2);
+function rs(){var w=c.clientWidth||600,h=c.clientHeight||330;R.setSize(w,h,false);C.aspect=w/h;C.updateProjectionMatrix()}
+rs();addEventListener("resize",rs);
+var dn=false,px=0,py=0;
+function md(e){dn=true;spin=false;var t=e.touches?e.touches[0]:e;px=t.clientX;py=t.clientY}
+function mm(e){if(!dn)return;var t=e.touches?e.touches[0]:e;yaw+=(t.clientX-px)*.008;
+pit=Math.max(-1.4,Math.min(1.4,pit+(t.clientY-py)*.008));px=t.clientX;py=t.clientY;if(e.touches)e.preventDefault()}
+c.addEventListener("mousedown",md);addEventListener("mousemove",mm);addEventListener("mouseup",function(){dn=false});
+c.addEventListener("touchstart",md,{passive:true});c.addEventListener("touchmove",mm,{passive:false});
+c.addEventListener("touchend",function(){dn=false});
+c.addEventListener("wheel",function(e){e.preventDefault();d=Math.max(1.5,Math.min(7,d+(e.deltaY>0?.22:-.22)))},{passive:false});
+(function loop(){requestAnimationFrame(loop);if(spin)yaw+=.003;
+C.position.set(Math.sin(yaw)*Math.cos(pit)*d,Math.sin(pit)*d,Math.cos(yaw)*Math.cos(pit)*d);C.lookAt(0,0,0);R.render(S,C)})();
+function load(id,nm,btn){
+ [].forEach.call(document.querySelectorAll(".picks button"),function(b){b.setAttribute("aria-current",String(b===btn))});
+ fetch("models/"+id+".json").then(function(r){return r.json()}).then(function(j){
+  var s=atob(j.data),u=new Uint8Array(s.length),i;
+  for(i=0;i<s.length;i++)u[i]=s.charCodeAt(i);
+  var q=new Int16Array(u.buffer),p=new Float32Array(q.length);
+  for(i=0;i<q.length;i++)p[i]=q[i]/32767;
+  var g=new THREE.BufferGeometry();g.setAttribute("position",new THREE.BufferAttribute(p,3));
+  g.computeVertexNormals();g.center();
+  if(M){S.remove(M);M.geometry.dispose()}
+  M=new THREE.Mesh(g,new THREE.MeshStandardMaterial({color:0xb0b6b6,metalness:.15,roughness:.6}));S.add(M);
+  cap.textContent=nm+" — "+j.tris.toLocaleString()+" triangles. Drag to rotate, scroll to zoom.";
+ }).catch(function(){cap.textContent="Could not load "+nm+"."});
+}
+var pk=document.getElementById("picks");
+P.forEach(function(p){var b=document.createElement("button");b.type="button";b.textContent=p[1];
+b.onclick=function(){load(p[0],p[1],b)};pk.appendChild(b)});
+load(P[0][0],P[0][1],pk.firstChild);
+</script>
+
+</body>
+</html>
