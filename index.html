@@ -9,47 +9,63 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://falakpatel.com/">
 <title>Falak Ameesh Patel</title>
+<script>try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
 <style>
-html{color-scheme:light}
-body{background:#ffffff;color:#000000;margin:0;padding:28px 18px 60px;
+:root{color-scheme:light;--bg:#ffffff;--fg:#000000;--link:#0000ee;--visited:#551a8b;
+--chip:rgba(0,0,238,.35);--chip-hover:rgba(0,0,238,.06)}
+:root[data-theme=dark]{color-scheme:dark;--bg:#141414;--fg:#e6e6e6;--link:#8ab4f8;--visited:#c58af9;
+--chip:rgba(138,180,248,.45);--chip-hover:rgba(138,180,248,.1)}
+body{background:var(--bg);color:var(--fg);margin:0;padding:28px 18px 60px;
 font:17px/1.55 "Times New Roman",Times,serif}
 .w{max-width:660px;margin:0 auto}
 h1{font-size:22px;font-weight:bold;margin:0 0 2px}
 h2{font-size:17px;font-weight:bold;margin:30px 0 8px}
 p{margin:0 0 13px}
-a{color:#0000ee}
-a:visited{color:#551a8b}
+a{color:var(--link)}
+a:visited{color:var(--visited)}
 .sub{margin:0 0 2px}
 .meta{margin:0 0 16px}
-.icons{margin:0 0 22px;line-height:1}
-.icons a{display:inline-block;margin-right:16px;color:#0000ee;text-decoration:none}
+.icons{margin:0 0 22px;line-height:1;text-align:center}
+.icons a{display:inline-block;margin:0 9px;color:var(--link);text-decoration:none}
 .icons svg{width:22px;height:22px;vertical-align:middle;display:inline-block}
+.theme{font:inherit;background:none;color:var(--fg);border:1px solid var(--chip);border-radius:4px;
+width:34px;height:34px;padding:0;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.theme:hover{background:var(--chip-hover)}
+.theme svg{width:18px;height:18px}
+.theme .sun,:root[data-theme=dark] .theme .moon{display:none}
+:root[data-theme=dark] .theme .sun{display:block}
+.theme-top{position:absolute;top:16px;right:16px}
 .viewer{position:relative;margin:4px 0 6px}
-canvas{display:block;width:100%;height:380px;cursor:grab;touch-action:none;background:#ffffff}
+canvas{display:block;width:100%;height:380px;cursor:grab;touch-action:none;background:var(--bg)}
 canvas:active{cursor:grabbing}
 canvas:focus-visible{outline-offset:-2px}
 .hint{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);margin:0;padding:3px 9px;
-font-size:14px;background:#ffffff;border:1px solid #000000;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap}
+font-size:14px;background:var(--bg);border:1px solid var(--fg);opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap}
 .hint.on{opacity:1}
-.picks{margin:2px 0 2px}
-.picks b{font-weight:normal;color:#000000}
-.picks button{font:16px/1.5 "Times New Roman",Times,serif;background:none;border:0;padding:0;
-color:#0000ee;text-decoration:underline;cursor:pointer}
-.picks button[aria-current=true]{color:#000000;text-decoration:none;font-weight:bold;cursor:default}
-.picks span{color:#000000}
+.picks{margin:4px 0 6px;line-height:2.1}
+.picks b{font-weight:normal;margin-right:4px}
+.picks button{font:15px/1.4 "Times New Roman",Times,serif;background:none;border:1px solid var(--chip);border-radius:4px;
+padding:1px 8px;margin:0 2px 0 0;color:var(--link);cursor:pointer}
+.picks button:hover{background:var(--chip-hover)}
+.picks button[aria-current=true]{color:var(--bg);background:var(--fg);border-color:var(--fg);cursor:default}
 .cap{margin:0 0 18px}
 ul{margin:0 0 13px;padding-left:22px}
 li{margin-bottom:5px}
 dl{margin:0 0 13px}
 dt{float:left;clear:left;width:11em}
 dd{margin:0 0 0 11em}
-footer{margin-top:34px;font-size:15px}
-:focus-visible{outline:2px solid #0000ee;outline-offset:2px}
-@media(max-width:520px){dt{float:none;width:auto;font-weight:bold}dd{margin-left:0;margin-bottom:6px}canvas{height:300px}}
+footer{margin-top:34px;font-size:15px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+@media(max-width:520px){dt{float:none;width:auto;font-weight:bold}dd{margin-left:0;margin-bottom:6px}canvas{height:300px}
+.theme-top{top:10px;right:10px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
 <body>
+<button type="button" class="theme theme-top" aria-label="Switch to dark mode" title="Switch to dark mode">
+<svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+<svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+</button>
 <div class="w">
 
 <h1>Falak Ameesh Patel</h1>
@@ -100,16 +116,31 @@ footer{margin-top:34px;font-size:15px}
 <h2>Writing</h2>
 <ul>
 <li><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=s6-Bs10AAAAJ&amp;citation_for_view=s6-Bs10AAAAJ:qjMakFHDy7sC">StrideMate: Wearable Lower-Limb Assistive Exoskeleton</a><br>FA Patel<br><em>Indian Institute of Technology, Hyderabad</em>, 2026</li>
-<li><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=s6-Bs10AAAAJ&amp;citation_for_view=s6-Bs10AAAAJ:UeHWp8X0CEIC">Application of QR Codes and Near-Field Communication Technology in Clinical Trials</a><br>FA Patel<br><em>Dr. D. Y. Patil College of Pharmacy, Akurdi (Affiliated to SPPU, formarly Pune University)</em>, 2023</li>
+<li><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=s6-Bs10AAAAJ&amp;citation_for_view=s6-Bs10AAAAJ:UeHWp8X0CEIC">Application of QR Codes and Near-Field Communication Technology in Clinical Trials</a><br>FA Patel<br><em>Dr. D. Y. Patil College of Pharmacy, Akurdi (Affiliated to SPPU, formerly Pune University)</em>, 2023</li>
 </ul>
 <p><a href="https://scholar.google.com/citations?user=s6-Bs10AAAAJ&amp;hl=en">Google Scholar</a>.</p>
 
 <h2>Background</h2>
 <p>Biodesign, clinical immersion, device standards and regulation, and IP at IIT Hyderabad. Biostatistics and research methodology, and pharmaceutical jurisprudence, at SPPU. Before that, regulatory affairs (FDA and EMA dossiers), quality assurance under GMP, and market research using surveys and focus groups.</p>
 
-<footer>StrideMate IP is held by IIT Hyderabad. Shown here to demonstrate the work, not for commercial use.</footer>
+<footer><span>StrideMate IP is held by IIT Hyderabad. Shown here to demonstrate the work, not for commercial use.</span>
+<button type="button" class="theme" aria-label="Switch to dark mode" title="Switch to dark mode">
+<svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+<svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+</button></footer>
 </div>
 
+<script>
+(function(){
+ var r=document.documentElement,bs=document.querySelectorAll(".theme");
+ function sync(){var d=r.dataset.theme==="dark",l=d?"Switch to light mode":"Switch to dark mode";
+  bs.forEach(function(b){b.setAttribute("aria-label",l);b.title=l})}
+ bs.forEach(function(b){b.addEventListener("click",function(){
+  r.dataset.theme=r.dataset.theme==="dark"?"light":"dark";
+  try{localStorage.setItem("theme",r.dataset.theme)}catch(e){}sync()})});
+ sync();
+})();
+</script>
 <script type="importmap">
 {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js",
 "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}
@@ -229,8 +260,7 @@ async function load(i,btn){
 
 P.forEach(([,nm,grp],i)=>{
  const row=document.getElementById("picks-"+grp);
- if(row.querySelector("button"))row.append(" · ");
- const b=document.createElement("button");b.type="button";b.textContent=nm;b.onclick=()=>load(i,b);row.append(b);
+  const b=document.createElement("button");b.type="button";b.textContent=nm;b.onclick=()=>load(i,b);row.append(b);
 });
 load(0,document.querySelector(".picks button"));
 
