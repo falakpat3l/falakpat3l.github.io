@@ -9,7 +9,13 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://falakpatel.com/">
 <title>Falak Ameesh Patel</title>
-<script>try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script>
+// Apply the saved dark/light choice before the page draws, so it never flashes.
+try {
+  var savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark" || savedTheme === "light") document.documentElement.dataset.theme = savedTheme;
+} catch (e) {}
+</script>
 <style>
 :root{color-scheme:light;--bg:#ffffff;--fg:#000000;--link:#0000ee;--visited:#551a8b;
 --chip:rgba(0,0,238,.35);--chip-hover:rgba(0,0,238,.06)}
@@ -131,14 +137,35 @@ footer{margin-top:34px;font-size:15px;display:flex;align-items:center;justify-co
 </div>
 
 <script>
-(function(){
- var r=document.documentElement,bs=document.querySelectorAll(".theme");
- function sync(){var d=r.dataset.theme==="dark",l=d?"Switch to light mode":"Switch to dark mode";
-  bs.forEach(function(b){b.setAttribute("aria-label",l);b.title=l})}
- bs.forEach(function(b){b.addEventListener("click",function(){
-  r.dataset.theme=r.dataset.theme==="dark"?"light":"dark";
-  try{localStorage.setItem("theme",r.dataset.theme)}catch(e){}sync()})});
- sync();
+// Dark / light mode buttons (one at the top, one in the footer).
+// The saved choice is applied early, in the <head>, so the page never flashes.
+(function () {
+  var root = document.documentElement;
+  var buttons = document.querySelectorAll(".theme");
+
+  // Keep the button labels in step with the current mode.
+  function updateLabels() {
+    var isDark = root.dataset.theme === "dark";
+    var label = isDark ? "Switch to light mode" : "Switch to dark mode";
+    buttons.forEach(function (button) {
+      button.setAttribute("aria-label", label);
+      button.title = label;
+    });
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
+      try {
+        localStorage.setItem("theme", root.dataset.theme);
+      } catch (e) {
+        // Private mode can block storage. The toggle still works for this visit.
+      }
+      updateLabels();
+    });
+  });
+
+  updateLabels();
 })();
 </script>
 <script type="importmap">
@@ -146,6 +173,18 @@ footer{margin-top:34px;font-size:15px;display:flex;align-items:center;justify-co
 "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}
 </script>
 <script type="module">
+// 3-D model viewer for the StrideMate parts.
+//
+// How it works, top to bottom:
+//   1. MODELS lists every part and where its CAD files live.
+//   2. Set up three.js: renderer, scene, lights, floor shadow, camera controls.
+//   3. loadModel() downloads models/<id>.bin, turns it into a mesh, and caches it.
+//   4. showModel() swaps the part on screen and writes the caption with file links.
+//   5. One button per part is added under the viewer, and the first part is shown.
+//   6. The draw loop runs only while the viewer is visible on screen.
+//
+// To add a part: put <id>.bin in models/ and add one line to MODELS.
+
 import * as THREE from "three";
 import {OrbitControls} from "three/addons/controls/OrbitControls.js";
 import {RoomEnvironment} from "three/addons/environments/RoomEnvironment.js";
@@ -154,124 +193,279 @@ import {LineSegments2} from "three/addons/lines/LineSegments2.js";
 import {LineSegmentsGeometry} from "three/addons/lines/LineSegmentsGeometry.js";
 import {LineMaterial} from "three/addons/lines/LineMaterial.js";
 
-// [file, label, group, CAD file name in the Stridemate_3D_files_IITH repo, has Fusion 360 source]
-const P=[["exo-shell","Shell","exo","Walking Assist exterior",1],["hip-joint","Hip joint","exo","joint hip 6",0],
-["motor-housing","Motor housing","exo","Motor hosing V6",1],["motor-base","Motor base","exo","Motor Base V6",1],
-["magnet-mount","Lower motor mount","exo","bottom_motor_mag",1],["encoder-cover","Encoder cover","exo","cover encoder",1],
-["tof-rod","Sensor mount","exo","tof_rod",1],["tof-switch","Sensor switch","exo","tof_switch",1],
-["thigh-link","Thigh link","exo","CNC_main",1],["holder-belt","Belt holder","exo","holder belt",1],
-["transtibial","Below-knee prosthesis","other","assembled transtibial prosthesis",0],
-["transtibial-simple","Below-knee, single piece","other","Trans-tibial (below-knee) Prosthesis",1],
-["hip-prosthesis","Hip prosthesis","other","Combine Hip Prosthesis",0],["third-thumb","Third Thumb","other","3rd thumb 1",1]];
-const REPO="https://github.com/falakpat3l/Stridemate_3D_files_IITH/blob/main/";
+// ---------------------------------------------------------------- 1. the parts
+// id:      file name in models/ (without .bin)
+// label:   button text
+// group:   "exo" (StrideMate row) or "other" (Other row)
+// cadName: file name in the Stridemate_3D_files_IITH repo
+// hasF3d:  true if a Fusion 360 source file exists for it
+const MODELS = [
+  {id: "exo-shell",          label: "Shell",                    group: "exo",   cadName: "Walking Assist exterior",              hasF3d: true},
+  {id: "hip-joint",          label: "Hip joint",                group: "exo",   cadName: "joint hip 6",                          hasF3d: false},
+  {id: "motor-housing",      label: "Motor housing",            group: "exo",   cadName: "Motor hosing V6",                      hasF3d: true},
+  {id: "motor-base",         label: "Motor base",               group: "exo",   cadName: "Motor Base V6",                        hasF3d: true},
+  {id: "magnet-mount",       label: "Lower motor mount",        group: "exo",   cadName: "bottom_motor_mag",                     hasF3d: true},
+  {id: "encoder-cover",      label: "Encoder cover",            group: "exo",   cadName: "cover encoder",                        hasF3d: true},
+  {id: "tof-rod",            label: "Sensor mount",             group: "exo",   cadName: "tof_rod",                              hasF3d: true},
+  {id: "tof-switch",         label: "Sensor switch",            group: "exo",   cadName: "tof_switch",                           hasF3d: true},
+  {id: "thigh-link",         label: "Thigh link",               group: "exo",   cadName: "CNC_main",                             hasF3d: true},
+  {id: "holder-belt",        label: "Belt holder",              group: "exo",   cadName: "holder belt",                          hasF3d: true},
+  {id: "transtibial",        label: "Below-knee prosthesis",    group: "other", cadName: "assembled transtibial prosthesis",     hasF3d: false},
+  {id: "transtibial-simple", label: "Below-knee, single piece", group: "other", cadName: "Trans-tibial (below-knee) Prosthesis", hasF3d: true},
+  {id: "hip-prosthesis",     label: "Hip prosthesis",           group: "other", cadName: "Combine Hip Prosthesis",               hasF3d: false},
+  {id: "third-thumb",        label: "Third Thumb",              group: "other", cadName: "3rd thumb 1",                          hasF3d: true},
+];
+const CAD_REPO = "https://github.com/falakpat3l/Stridemate_3D_files_IITH/blob/main/";
 
-const c=document.getElementById("gl"),cap=document.getElementById("cap"),hint=document.getElementById("hint"),
-viewer=document.getElementById("viewer"),still=matchMedia("(prefers-reduced-motion: reduce)").matches,
-touch=matchMedia("(pointer: coarse)").matches;
-if(touch)document.getElementById("how").textContent="Drag to rotate, pinch to zoom, two fingers to pan, double-tap to reset.";
+// ---------------------------------------------------------------- 2. setup
+const canvas = document.getElementById("gl");
+const caption = document.getElementById("cap");
+const hint = document.getElementById("hint");
+const viewer = document.getElementById("viewer");
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isTouch = matchMedia("(pointer: coarse)").matches;
 
-let R;
-try{R=new THREE.WebGLRenderer({canvas:c,antialias:true,alpha:true})}
-catch(e){cap.textContent="3-D preview needs WebGL, which this browser has turned off.";throw e}
-R.setPixelRatio(Math.min(devicePixelRatio,2));
-R.toneMapping=THREE.NeutralToneMapping;
-R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;
-
-const S=new THREE.Scene(),C=new THREE.PerspectiveCamera(30,1,.01,100);
-const pm=new THREE.PMREMGenerator(R);
-S.environment=pm.fromScene(new RoomEnvironment(),.04).texture;S.environmentIntensity=.55;
-S.add(new THREE.HemisphereLight(0xffffff,0xd8d4cc,.6));
-const key=new THREE.DirectionalLight(0xffffff,1.6);key.castShadow=true;
-key.shadow.mapSize.set(2048,2048);key.shadow.radius=6;key.shadow.bias=-.0004;key.shadow.normalBias=.01;
-Object.assign(key.shadow.camera,{left:-2.5,right:2.5,top:2.5,bottom:-2.5,near:.1,far:12});
-S.add(key,key.target);
-
-const ground=new THREE.Mesh(new THREE.PlaneGeometry(12,12),new THREE.ShadowMaterial({opacity:.13}));
-ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;S.add(ground);
-
-const skin=new THREE.MeshStandardMaterial({color:0xdcd9d2,roughness:.55,metalness:0,
-polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
-const ink=new LineMaterial({color:0x1a1a1a,linewidth:1.1,transparent:true,opacity:.8});
-
-const ctl=new OrbitControls(C,c);
-Object.assign(ctl,{enableDamping:true,dampingFactor:.08,screenSpacePanning:true,autoRotate:!still,autoRotateSpeed:.9,
-maxPolarAngle:Math.PI*.95,zoomSpeed:.8});
-ctl.addEventListener("start",()=>{ctl.autoRotate=false});
-
-// Leave plain scrolling to the page; zoom needs Ctrl/Cmd (a trackpad pinch arrives as Ctrl+wheel)
-let ht;
-function tip(t){hint.textContent=t;hint.classList.add("on");clearTimeout(ht);ht=setTimeout(()=>hint.classList.remove("on"),1300)}
-viewer.addEventListener("wheel",e=>{if(!e.ctrlKey&&!e.metaKey){e.stopPropagation();tip("Hold Ctrl or ⌘ to zoom")}},{capture:true});
-
-function rs(){const w=c.clientWidth||600,h=c.clientHeight||380;R.setSize(w,h,false);ink.resolution.set(w,h);C.aspect=w/h;C.updateProjectionMatrix()}
-new ResizeObserver(rs).observe(c);rs();
-
-// Framing: each mesh is normalised so its longest side spans -1..1 and it sits on y=0
-const HOME=new THREE.Vector3(1,.55,1.35).normalize();
-let M=null,home={pos:new THREE.Vector3(),tgt:new THREE.Vector3()},fly=null;
-function frame(r,cy){
- const d=r/Math.sin(THREE.MathUtils.degToRad(C.fov/2))*(C.aspect<1?1.25:.92);
- home.tgt.set(0,cy,0);home.pos.copy(HOME).multiplyScalar(d).add(home.tgt);
- ctl.minDistance=r*1.1;ctl.maxDistance=d*3;
-}
-function reset(){fly={t:0,p0:C.position.clone(),t0:ctl.target.clone()}}
-c.addEventListener("dblclick",reset);
-c.addEventListener("keydown",e=>{if(e.key==="r"||e.key==="Home"){reset();e.preventDefault()}});
-
-const cache=new Map();let want=null;
-async function get(id){
- if(cache.has(id))return cache.get(id);
- const b=await fetch("models/"+id+".bin").then(r=>{if(!r.ok)throw r.status;return r.arrayBuffer()});
- const h=new DataView(b),nv=h.getUint32(0,true),nt=h.getUint32(4,true),
- ext=[h.getFloat32(8,true),h.getFloat32(12,true),h.getFloat32(16,true)];
- const q=new Int16Array(b,20,nv*3),o=20+((nv*6+3)&~3),
- ix=nv<65536?new Uint16Array(b,o,nt*3):new Uint32Array(b,o,nt*3),p=new Float32Array(nv*3);
- for(let i=0;i<p.length;i++)p[i]=q[i]/32767;
- const g=new THREE.BufferGeometry();g.setAttribute("position",new THREE.BufferAttribute(p,3));
- g.setIndex(new THREE.BufferAttribute(ix,1));g.computeBoundingBox();
- g.translate(0,-g.boundingBox.min.y,0);g.computeBoundingSphere();
- const grp=new THREE.Group(),m=new THREE.Mesh(toCreasedNormals(g,THREE.MathUtils.degToRad(32)),skin);
- m.castShadow=m.receiveShadow=true;
- const eg=new LineSegmentsGeometry().setPositions(new THREE.EdgesGeometry(g,32).attributes.position.array);
- grp.add(m,new LineSegments2(eg,ink));
- const v={grp,ext,tris:nt,r:g.boundingSphere.radius,cy:g.boundingSphere.center.y};
- cache.set(id,v);return v;
-}
-const fmt=n=>n<10?n.toFixed(1):Math.round(n);
-async function load(i,btn){
- const [id,nm]=P[i];want=id;
- document.querySelectorAll(".picks button").forEach(b=>b.setAttribute("aria-current",String(b===btn)));
- if(!cache.has(id))cap.textContent="Loading "+nm+"…";
- try{
-  const v=await get(id);if(want!==id)return;
-  if(M)S.remove(M);M=v.grp;S.add(M);
-  frame(v.r,v.cy);ctl.target.copy(home.tgt);C.position.copy(home.pos);ctl.autoRotate=!still;ctl.update();
-  key.position.set(1.8,4,2.4);
-  c.setAttribute("aria-label","3-D model: "+nm);
-  const e=v.ext.slice().sort((a,b)=>b-a);
-  cap.textContent=nm+": about "+e.map(fmt).join(" × ")+" mm, "+v.tris.toLocaleString()+" triangles. Files: ";
-  [["STL","stl/",".stl"],["STEP","stp/",".step"],["Fusion 360","f3d/",".f3d"]].forEach(([t,d,x],k)=>{
-   if(k===2&&!P[i][4])return;
-   if(k)cap.append(" · ");
-   const a=document.createElement("a");a.href=REPO+d+encodeURIComponent(P[i][3]+x);a.textContent=t;cap.append(a);
-  });
- }catch(e){if(want===id)cap.textContent="Could not load "+nm+"."}
+if (isTouch) {
+  document.getElementById("how").textContent =
+    "Drag to rotate, pinch to zoom, two fingers to pan, double-tap to reset.";
 }
 
-P.forEach(([,nm,grp],i)=>{
- const row=document.getElementById("picks-"+grp);
-  const b=document.createElement("button");b.type="button";b.textContent=nm;b.onclick=()=>load(i,b);row.append(b);
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({canvas, antialias: true, alpha: true});
+} catch (error) {
+  caption.textContent = "3-D preview needs WebGL, which this browser has turned off.";
+  throw error;
+}
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.toneMapping = THREE.NeutralToneMapping;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(30, 1, 0.01, 100);
+
+// Soft studio lighting: an environment map, a sky light, and one shadow-casting lamp.
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.55;
+scene.add(new THREE.HemisphereLight(0xffffff, 0xd8d4cc, 0.6));
+
+const lamp = new THREE.DirectionalLight(0xffffff, 1.6);
+lamp.castShadow = true;
+lamp.shadow.mapSize.set(2048, 2048);
+lamp.shadow.radius = 6;
+lamp.shadow.bias = -0.0004;
+lamp.shadow.normalBias = 0.01;
+Object.assign(lamp.shadow.camera, {left: -2.5, right: 2.5, top: 2.5, bottom: -2.5, near: 0.1, far: 12});
+scene.add(lamp, lamp.target);
+
+// An invisible floor that only shows the shadow.
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(12, 12), new THREE.ShadowMaterial({opacity: 0.13}));
+floor.rotation.x = -Math.PI / 2;
+floor.receiveShadow = true;
+scene.add(floor);
+
+// Parts are drawn as a light grey surface plus dark outline edges, like a sketch.
+const surfaceMaterial = new THREE.MeshStandardMaterial({
+  color: 0xdcd9d2, roughness: 0.55, metalness: 0,
+  // Push the surface back slightly so the outline edges are not hidden by it.
+  polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1,
 });
-load(0,document.querySelector(".picks button"));
+const edgeMaterial = new LineMaterial({color: 0x1a1a1a, linewidth: 1.1, transparent: true, opacity: 0.8});
 
-// Only draw while the viewer is on screen
-let vis=true;
-new IntersectionObserver(([e])=>{vis=e.isIntersecting}).observe(c);
-R.setAnimationLoop(()=>{
- if(!vis)return;
- if(fly){fly.t=Math.min(1,fly.t+.06);const k=1-Math.pow(1-fly.t,3);
-  C.position.lerpVectors(fly.p0,home.pos,k);ctl.target.lerpVectors(fly.t0,home.tgt,k);if(fly.t===1)fly=null}
- ctl.update();R.render(S,C);
+// Mouse and touch controls (rotate, pan, zoom). It spins slowly until touched.
+const controls = new OrbitControls(camera, canvas);
+Object.assign(controls, {
+  enableDamping: true, dampingFactor: 0.08, screenSpacePanning: true,
+  autoRotate: !reduceMotion, autoRotateSpeed: 0.9,
+  maxPolarAngle: Math.PI * 0.95, zoomSpeed: 0.8,
+});
+controls.addEventListener("start", () => { controls.autoRotate = false; });
+
+// Plain scrolling should scroll the page, not zoom. Zoom needs Ctrl or Cmd
+// (a trackpad pinch arrives as Ctrl + wheel, so pinching still works).
+let hintTimer;
+function showHint(text) {
+  hint.textContent = text;
+  hint.classList.add("on");
+  clearTimeout(hintTimer);
+  hintTimer = setTimeout(() => hint.classList.remove("on"), 1300);
+}
+viewer.addEventListener("wheel", (event) => {
+  if (!event.ctrlKey && !event.metaKey) {
+    event.stopPropagation();
+    showHint("Hold Ctrl or ⌘ to zoom");
+  }
+}, {capture: true});
+
+function resize() {
+  const width = canvas.clientWidth || 600;
+  const height = canvas.clientHeight || 380;
+  renderer.setSize(width, height, false);
+  edgeMaterial.resolution.set(width, height);
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+}
+new ResizeObserver(resize).observe(canvas);
+resize();
+
+// Camera framing. Every part is scaled so its longest side spans -1..1 and it
+// sits on the floor, so one camera direction works for all of them.
+const HOME_DIRECTION = new THREE.Vector3(1, 0.55, 1.35).normalize();
+const home = {position: new THREE.Vector3(), target: new THREE.Vector3()};
+let flyHome = null; // set while the camera glides back to the home view
+
+function frameModel(radius, centreY) {
+  const fitDistance = radius / Math.sin(THREE.MathUtils.degToRad(camera.fov / 2));
+  const distance = fitDistance * (camera.aspect < 1 ? 1.25 : 0.92); // more room on tall phone screens
+  home.target.set(0, centreY, 0);
+  home.position.copy(HOME_DIRECTION).multiplyScalar(distance).add(home.target);
+  controls.minDistance = radius * 1.1;
+  controls.maxDistance = distance * 3;
+}
+
+function resetView() {
+  flyHome = {progress: 0, fromPosition: camera.position.clone(), fromTarget: controls.target.clone()};
+}
+canvas.addEventListener("dblclick", resetView);
+canvas.addEventListener("keydown", (event) => {
+  if (event.key === "r" || event.key === "Home") {
+    resetView();
+    event.preventDefault();
+  }
+});
+
+// ---------------------------------------------------------------- 3. loading a part
+// Each .bin file is a compact mesh made from the STL:
+//   bytes 0-3    number of vertices (uint32)
+//   bytes 4-7    number of triangles (uint32)
+//   bytes 8-19   real size of the part in mm: x, y, z (3 x float32)
+//   then         vertex positions, 3 x int16 each, scaled so 32767 = 1.0
+//   then         triangle corner indices (uint16, or uint32 for big meshes),
+//                starting at the next multiple of 4 bytes
+const cache = new Map();
+
+async function loadModel(id) {
+  if (cache.has(id)) return cache.get(id);
+
+  const response = await fetch("models/" + id + ".bin");
+  if (!response.ok) throw response.status;
+  const buffer = await response.arrayBuffer();
+
+  const header = new DataView(buffer);
+  const vertexCount = header.getUint32(0, true);
+  const triangleCount = header.getUint32(4, true);
+  const sizeMm = [header.getFloat32(8, true), header.getFloat32(12, true), header.getFloat32(16, true)];
+
+  const packed = new Int16Array(buffer, 20, vertexCount * 3);
+  const positions = new Float32Array(vertexCount * 3);
+  for (let i = 0; i < positions.length; i++) positions[i] = packed[i] / 32767;
+
+  const indexStart = 20 + ((vertexCount * 6 + 3) & ~3); // round up to a multiple of 4
+  const indices = vertexCount < 65536
+    ? new Uint16Array(buffer, indexStart, triangleCount * 3)
+    : new Uint32Array(buffer, indexStart, triangleCount * 3);
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  geometry.setIndex(new THREE.BufferAttribute(indices, 1));
+  geometry.computeBoundingBox();
+  geometry.translate(0, -geometry.boundingBox.min.y, 0); // stand it on the floor
+  geometry.computeBoundingSphere();
+
+  // Smooth shading, but keep corners sharper than 32 degrees crisp.
+  const surface = new THREE.Mesh(toCreasedNormals(geometry, THREE.MathUtils.degToRad(32)), surfaceMaterial);
+  surface.castShadow = true;
+  surface.receiveShadow = true;
+  const edges = new LineSegmentsGeometry().setPositions(
+    new THREE.EdgesGeometry(geometry, 32).attributes.position.array);
+
+  const group = new THREE.Group();
+  group.add(surface, new LineSegments2(edges, edgeMaterial));
+
+  const model = {
+    group,
+    sizeMm,
+    triangleCount,
+    radius: geometry.boundingSphere.radius,
+    centreY: geometry.boundingSphere.center.y,
+  };
+  cache.set(id, model);
+  return model;
+}
+
+// ---------------------------------------------------------------- 4. showing a part
+let currentGroup = null;
+let wantedId = null; // the part most recently clicked, so a slow download can't overwrite a newer click
+
+const formatMm = (n) => (n < 10 ? n.toFixed(1) : Math.round(n));
+
+async function showModel(part, button) {
+  wantedId = part.id;
+  document.querySelectorAll(".picks button").forEach((b) => b.setAttribute("aria-current", String(b === button)));
+  if (!cache.has(part.id)) caption.textContent = "Loading " + part.label + "…";
+
+  try {
+    const model = await loadModel(part.id);
+    if (wantedId !== part.id) return; // the visitor already clicked something else
+
+    if (currentGroup) scene.remove(currentGroup);
+    currentGroup = model.group;
+    scene.add(currentGroup);
+
+    frameModel(model.radius, model.centreY);
+    controls.target.copy(home.target);
+    camera.position.copy(home.position);
+    controls.autoRotate = !reduceMotion;
+    controls.update();
+    lamp.position.set(1.8, 4, 2.4);
+    canvas.setAttribute("aria-label", "3-D model: " + part.label);
+
+    // Caption: size, triangle count, and links to the CAD files.
+    const sides = model.sizeMm.slice().sort((a, b) => b - a);
+    caption.textContent = part.label + ": about " + sides.map(formatMm).join(" × ") + " mm, " +
+      model.triangleCount.toLocaleString() + " triangles. Files: ";
+    const links = [["STL", "stl/", ".stl"], ["STEP", "stp/", ".step"]];
+    if (part.hasF3d) links.push(["Fusion 360", "f3d/", ".f3d"]);
+    links.forEach(([text, folder, extension], i) => {
+      if (i > 0) caption.append(" · ");
+      const link = document.createElement("a");
+      link.href = CAD_REPO + folder + encodeURIComponent(part.cadName + extension);
+      link.textContent = text;
+      caption.append(link);
+    });
+  } catch (error) {
+    if (wantedId === part.id) caption.textContent = "Could not load " + part.label + ".";
+  }
+}
+
+// ---------------------------------------------------------------- 5. the buttons
+MODELS.forEach((part) => {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.textContent = part.label;
+  button.onclick = () => showModel(part, button);
+  document.getElementById("picks-" + part.group).append(button);
+});
+showModel(MODELS[0], document.querySelector(".picks button"));
+
+// ---------------------------------------------------------------- 6. the draw loop
+// Only draw while the viewer is on screen, to save battery.
+let onScreen = true;
+new IntersectionObserver(([entry]) => { onScreen = entry.isIntersecting; }).observe(canvas);
+
+renderer.setAnimationLoop(() => {
+  if (!onScreen) return;
+  if (flyHome) {
+    // Glide back to the home view, slowing down at the end.
+    flyHome.progress = Math.min(1, flyHome.progress + 0.06);
+    const eased = 1 - Math.pow(1 - flyHome.progress, 3);
+    camera.position.lerpVectors(flyHome.fromPosition, home.position, eased);
+    controls.target.lerpVectors(flyHome.fromTarget, home.target, eased);
+    if (flyHome.progress === 1) flyHome = null;
+  }
+  controls.update();
+  renderer.render(scene, camera);
 });
 </script>
 
