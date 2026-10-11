@@ -62,6 +62,31 @@ dt{float:left;clear:left;width:11em}
 dd{margin:0 0 0 11em}
 footer{margin-top:34px;font-size:15px;display:flex;align-items:center;justify-content:space-between;gap:16px}
 :focus-visible{outline:2px solid var(--link);outline-offset:2px}
+/* Project browser: a list on the left, the picked project on the right. */
+.browser{border:1px solid var(--fg);margin:6px 0 22px}
+.browser .cols{display:grid;grid-template-columns:205px 1fr}
+.plist{margin:0;padding:8px 0;border-right:1px solid var(--fg)}
+.plist button{display:block;width:100%;text-align:left;font:inherit;background:none;border:0;
+padding:2px 12px;color:var(--link);text-decoration:underline;cursor:pointer}
+.plist button[aria-selected=true]{background:var(--fg);color:var(--bg);text-decoration:none;cursor:default}
+.pane{padding:10px 14px 4px;min-width:0}
+.pane h3{font-size:17px;margin:0 0 6px}
+.pic{position:relative;aspect-ratio:4/3;display:flex;align-items:center;
+justify-content:center;overflow:hidden;margin:0 0 6px;color:var(--fg)}
+.pic img{max-width:94%;max-height:94%;object-fit:contain;display:block}
+.pic svg{width:70%;height:70%}
+.pic .phone{height:100%;width:auto}
+.shots{font-size:14px;margin:0 0 10px;text-align:center}
+.shots button{font:inherit;background:none;border:1px solid var(--chip);border-radius:4px;color:var(--link);
+padding:0 8px;margin:0 6px;cursor:pointer}
+.shots button:hover,.plist button:not([aria-selected=true]):hover{background:var(--chip-hover)}
+.pane dl{font-size:15px}
+.pane dt{width:7em}.pane dd{margin-left:7em}
+.bar{border-top:1px solid var(--fg);font-size:14px;padding:3px 12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:560px){.browser .cols{grid-template-columns:1fr}
+.plist{border-right:0;border-bottom:1px solid var(--fg);display:flex;flex-wrap:wrap;padding:6px}
+.plist button{width:auto;padding:2px 8px}.bar .keys{display:none}
+.pane dt{float:none;width:auto}.pane dd{margin-left:0}}
 @media(max-width:520px){dt{float:none;width:auto;font-weight:bold}dd{margin-left:0;margin-bottom:6px}canvas{height:300px}
 .theme-top{top:10px;right:10px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
@@ -85,11 +110,22 @@ footer{margin-top:34px;font-size:15px;display:flex;align-items:center;justify-co
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2.5" y="4" width="19" height="16"/><circle cx="8.8" cy="10.2" r="2.3"/><path d="M5.2 16.6c.5-2 2-3 3.6-3s3.1 1 3.6 3"/><path d="M15 9.4h4.2M15 12.2h4.2M15 15h3"/></svg></a>
 <a href="https://scholar.google.com/citations?user=s6-Bs10AAAAJ" title="Google Scholar profile" aria-label="Google Scholar profile">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 4.2L2.2 9 12 13.8 21.8 9 12 4.2z"/><path d="M6.4 11.4V16c0 1.7 2.5 3 5.6 3s5.6-1.3 5.6-3v-4.6"/><path d="M21.8 9v5"/></svg></a>
+<a href="https://github.com/falakpat3l" title="GitHub" aria-label="GitHub">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.4c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 0 0-6 0C6.8 2.9 5.8 3.2 5.8 3.2a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4.4 9.6c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a>
 </p>
 
 <p>I build assistive medical hardware, and I am interested in why so little of it reaches patients. The device is rarely the hard part. The path from a working prototype to something a health system will actually buy and use is where most of these projects stop, including mine.</p>
 
-<h2>StrideMate</h2>
+<h2>Projects</h2>
+<div class="browser" id="browser">
+<div class="cols">
+<div class="plist" role="tablist" aria-label="Projects" aria-orientation="vertical" id="plist"></div>
+<div class="pane" role="tabpanel" id="pane" aria-live="polite"></div>
+</div>
+<div class="bar"><span class="keys">&uarr;&darr; project &middot; &larr;&rarr; picture &middot; Enter opens the source</span><span id="ghstats"><a href="https://github.com/falakpat3l">github.com/falakpat3l</a></span></div>
+</div>
+
+<h2 id="stridemate">StrideMate</h2>
 <p>A wearable lower-limb assistive exoskeleton. My M.Tech thesis at IIT Hyderabad, 2025-26, supervised by <a href="https://iith.ac.in/mae/safvan/">Prof. Safvan Palathingal</a> and <a href="https://iith.ac.in/bme/renujohn/">Prof. Renu John</a>.</p>
 
 <div class="viewer" id="viewer">
@@ -166,6 +202,122 @@ footer{margin-top:34px;font-size:15px;display:flex;align-items:center;justify-co
   });
 
   updateLabels();
+})();
+</script>
+<script>
+// Project browser. Each project: name, a sentence or two, facts, links and pictures.
+// A picture is [file, description] or ["svg:watch" / "svg:pipeline", description] for a drawing.
+(function () {
+  var GH = "https://github.com/falakpat3l/";
+  var projects = [
+    {name: "padachar",
+     text: "Offline step and food tracker for Android. It counts steps with the phone's own sensor and keeps everything on the phone: no internet permission, no account, no ads.",
+     facts: [["Built with", "Kotlin, Jetpack Compose"], ["Status", "v0.7 alpha, Google Play testing next"]],
+     links: [["Source", GH + "padachar"], ["Download", GH + "padachar/releases"]],
+     pics: [["projects/padachar-home.jpg", "padachar home screen: today's steps and four goal lines", "phone"],
+            ["projects/padachar-activity.jpg", "Activity tab: walking and running, last seven days", "phone"],
+            ["projects/padachar-food.jpg", "Food tab: eaten, burned and the day's deficit", "phone"]]},
+    {name: "ink-health-watch",
+     text: "An open-source e-paper watch on the ESP32-S3 for steps, walking cadence and reminders. Early prototype: the board boots on battery, and the first step-counting maths is tested on a laptop.",
+     facts: [["Built with", "C++, PlatformIO"], ["Status", "early prototype"]],
+     links: [["Source", GH + "ink-health-watch"]],
+     pics: [["svg:watch", "Drawing of the e-paper watch (no photo yet)"]]},
+    {name: "exo-telemetry-tunnel",
+     text: "A live gait dashboard for StrideMate: stride time, cadence, variability and left/right asymmetry, shared on a public link with one command. It is read-only, so it can never move the motors.",
+     facts: [["Built with", "Python, standard library only"], ["Status", "v1.0.0"]],
+     links: [["Source", GH + "exo-telemetry-tunnel"], ["Release", GH + "exo-telemetry-tunnel/releases"]],
+     pics: [["projects/exo-dashboard.jpg", "The dashboard running on demo data"]]},
+    {name: "StrideMate firmware",
+     text: "Firmware for the two ESP32 controllers and the Wi-Fi dashboard that run the exoskeleton below. Research prototype, not a medical device.",
+     facts: [["Built with", "C++, Arduino, ESP32"], ["Status", "v1.4.0, untested on hardware"]],
+     links: [["Source", GH + "stridemate-exoskeleton"], ["3D model", "#stridemate"]],
+     pics: [["projects/stridemate-shell.png", "The StrideMate shell, from the CAD files"]]},
+    {name: "QR and NFC in trials",
+     text: "My B.Pharm thesis: does scanning a code beat pen and paper for recording dosing events in a trial? The app makes QR labels, scans them, reads NFC tags and exports a CSV log, all offline in the browser.",
+     facts: [["Built with", "JavaScript; Python for the charts"], ["Published", "2023"]],
+     links: [["Open the app", "https://falakpat3l.github.io/qr-nfc-clinical-trials/app.html"], ["Write-up", "https://falakpat3l.github.io/qr-nfc-clinical-trials/"], ["Source", GH + "qr-nfc-clinical-trials"]],
+     pics: [["projects/qr-label.png", "A dosing-event label made by the app"], ["projects/qr-app.jpg", "The app's label form"]]},
+    {name: "persona-pipeline",
+     text: "Turns a one-line topic into an image, caption, hashtags and alt text for a virtual persona. A vision model checks every image and asks for another try when it drifts from the persona.",
+     facts: [["Built with", "Python, Gemini API"], ["Tests", "67, all offline"]],
+     links: [["Source", GH + "persona-pipeline"], ["Release", GH + "persona-pipeline/releases"]],
+     pics: [["svg:pipeline", "Diagram: topic, image, check, caption"]]}
+  ];
+
+  // Small line drawings that follow the page's colours.
+  var drawings = {
+    watch: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M45 4h30v18M45 4v18M45 98v18h30V98"/><rect x="30" y="22" width="60" height="76" rx="14"/><rect x="38" y="32" width="44" height="56" rx="4"/><text x="60" y="62" text-anchor="middle" font-family="Times New Roman, serif" font-size="17" fill="currentColor" stroke="none">08:42</text><text x="60" y="76" text-anchor="middle" font-family="Times New Roman, serif" font-size="8" fill="currentColor" stroke="none">4,210 steps</text></svg>',
+    pipeline: '<svg viewBox="0 0 240 90" fill="none" stroke="currentColor" stroke-width="1.2" font-family="Times New Roman, serif" font-size="11"><g><rect x="4" y="30" width="46" height="26"/><rect x="66" y="30" width="46" height="26"/><rect x="128" y="30" width="46" height="26"/><rect x="190" y="30" width="46" height="26"/></g><g fill="currentColor" stroke="none" text-anchor="middle"><text x="27" y="47">topic</text><text x="89" y="47">image</text><text x="151" y="47">check</text><text x="213" y="47">caption</text><text x="120" y="12">try again if it drifts</text></g><path d="M50 43h14M112 43h14M174 43h14M151 30V18H89v10"/><path d="M60 40l4 3-4 3M122 40l4 3-4 3M184 40l4 3-4 3M86 25l3 4 3-4"/></svg>'
+  };
+
+  var list = document.getElementById("plist");
+  var pane = document.getElementById("pane");
+  var current = 0, shot = 0;
+
+  projects.forEach(function (p, i) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.setAttribute("role", "tab");
+    b.textContent = p.name;
+    b.addEventListener("click", function () { pick(i); });
+    list.appendChild(b);
+  });
+
+  function esc(t) { return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;"); }
+
+  function show() {
+    var p = projects[current];
+    var pic = p.pics[shot];
+    var art = pic[0].indexOf("svg:") === 0
+      ? drawings[pic[0].slice(4)]
+      : '<img src="' + pic[0] + '" alt="' + esc(pic[1]) + '"' + (pic[2] === "phone" ? ' class="phone"' : "") + ' loading="lazy">';
+    var html = "<h3>" + esc(p.name) + "</h3>";
+    html += '<div class="pic" role="img" aria-label="' + esc(pic[1]) + '">' + art + "</div>";
+    if (p.pics.length > 1) {
+      html += '<p class="shots"><button type="button" data-step="-1" aria-label="Previous picture">&larr;</button>' +
+        (shot + 1) + " / " + p.pics.length +
+        '<button type="button" data-step="1" aria-label="Next picture">&rarr;</button></p>';
+    } else {
+      html += '<p class="shots">' + esc(pic[1]) + "</p>";
+    }
+    html += "<p>" + esc(p.text) + "</p><dl>";
+    p.facts.forEach(function (f) { html += "<dt>" + esc(f[0]) + "</dt><dd>" + esc(f[1]) + "</dd>"; });
+    html += "</dl><p>" + p.links.map(function (l) { return '<a href="' + l[1] + '">' + esc(l[0]) + "</a>"; }).join(" &middot; ") + "</p>";
+    pane.innerHTML = html;
+    pane.querySelectorAll(".shots button").forEach(function (b) {
+      b.addEventListener("click", function () { step(+b.dataset.step); });
+    });
+    list.querySelectorAll("button").forEach(function (b, i) {
+      b.setAttribute("aria-selected", i === current ? "true" : "false");
+      b.tabIndex = i === current ? 0 : -1;
+    });
+  }
+
+  function pick(i) { current = (i + projects.length) % projects.length; shot = 0; show(); }
+  function step(d) { var n = projects[current].pics.length; shot = (shot + d + n) % n; show(); }
+
+  // Keyboard: arrows move only while the browser has focus, so the page still scrolls normally.
+  document.getElementById("browser").addEventListener("keydown", function (e) {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      pick(current + (e.key === "ArrowDown" ? 1 : -1));
+      list.querySelectorAll("button")[current].focus();
+      e.preventDefault();
+    } else if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+      step(e.key === "ArrowRight" ? 1 : -1);
+      e.preventDefault();
+    } else if (e.key === "Enter" && e.target.getAttribute("role") === "tab") {
+      location.href = projects[current].links[0][1];
+    }
+  });
+
+  show();
+
+  // Live GitHub numbers for the status line. If GitHub does not answer, the plain link stays.
+  fetch("https://api.github.com/users/falakpat3l").then(function (r) { return r.ok ? r.json() : null; }).then(function (u) {
+    if (!u) return;
+    document.getElementById("ghstats").innerHTML = '<a href="https://github.com/falakpat3l">github.com/falakpat3l</a> &middot; ' +
+      u.public_repos + " repos &middot; " + u.followers + " followers";
+  }).catch(function () {});
 })();
 </script>
 <script type="importmap">
