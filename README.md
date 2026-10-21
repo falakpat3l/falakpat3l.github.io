@@ -6,8 +6,11 @@ My portfolio site. One page, no build step: GitHub Pages serves `index.html` as 
 
 | File | What it is |
 |---|---|
-| `index.html` | The whole site: styles at the top, text in the middle, two scripts at the bottom |
+| `index.html` | The whole site: styles at the top, text in the middle, scripts at the bottom |
 | `models/*.bin` | The 3-D parts shown in the viewer, in a small format made from the STL files |
+| `projects/` | Pictures for the project browser |
+| `og.png` | The picture shown when the link is shared (1200 x 630) |
+| `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` | The tab and home-screen icons |
 | `CNAME` | Points the site at falakpatel.com. Don't change it |
 | `.nojekyll` | Tells GitHub Pages to serve files as they are |
 
@@ -15,12 +18,15 @@ My portfolio site. One page, no build step: GitHub Pages serves `index.html` as 
 
 1. **Styles** (`<style>` in the head). Colours for light and dark mode are the variables at the top (`--bg`, `--fg`, `--link`).
 2. **Text.** Plain HTML. Edit it like a document.
-3. **Dark / light switch** (first script at the bottom). Remembers the choice in the browser.
-4. **3-D viewer** (last script). It uses three.js from a CDN. The script is split into six numbered, commented sections. The `MODELS` list at the top is the only part you normally touch.
+3. **Dark / light switch** (first script at the bottom). Follows the phone or computer setting until the visitor picks one, then remembers the choice.
+4. **Project browser** (second script). The `projects` list at the top holds each project's text, facts, links and pictures. Arrow keys move through it, and the GitHub numbers in its bottom line are optional: if GitHub does not answer, the plain link stays.
+5. **3-D viewer** (last script). It uses three.js from a CDN. Without internet (or WebGL) it shows a still picture of the shell instead. The script is split into six numbered, commented sections. The `MODELS` list at the top is the only part you normally touch.
 
 ## Common changes
 
 **Edit text.** Change it in `index.html`, then open the file in a browser to check.
+
+**Add a project.** Put its picture in `projects/` and add an entry to `projects` in the browser script.
 
 **Add a 3-D part.** Put `<name>.bin` in `models/` and add one line to `MODELS` in the viewer script, with the button label, the row (`exo` or `other`), and the CAD file name in the Stridemate_3D_files_IITH repo.
 
