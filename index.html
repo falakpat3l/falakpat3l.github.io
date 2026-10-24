@@ -73,7 +73,7 @@ font-size:14px;background:var(--bg);border:1px solid var(--fg);opacity:0;transit
 padding:1px 8px;margin:0 2px 0 0;color:var(--link);cursor:pointer}
 .picks button:hover{background:var(--chip-hover)}
 .picks button[aria-current=true]{color:var(--bg);background:var(--fg);border-color:var(--fg);cursor:default}
-.cap{margin:0 0 18px}
+.cap{margin:0 0 18px;overflow-wrap:anywhere}
 ul{margin:0 0 13px;padding-left:22px}
 li{margin-bottom:5px}
 dl{margin:0 0 13px}
@@ -273,7 +273,7 @@ button{transition:background-color .15s,color .15s}
      pics: [["projects/qr-label.png", "A dosing-event label made by the app"], ["projects/qr-app.jpg", "The app's label form"]]},
     {name: "persona-pipeline",
      text: "Turns a one-line topic into an image, caption, hashtags and alt text. A vision model checks every image and asks for another try when it drifts off target.",
-     facts: [["Built with", "Python, Gemini API"], ["Tests", "67, all offline"]],
+     facts: [["Built with", "Python, Gemini API"], ["Tests", "74, all offline"]],
      links: [["Source", GH + "persona-pipeline"], ["Release", GH + "persona-pipeline/releases"]],
      pics: [["svg:pipeline", "Diagram: topic, image, check, caption"]]}
   ];
