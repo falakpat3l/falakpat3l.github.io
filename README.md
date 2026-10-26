@@ -9,6 +9,7 @@ My portfolio site. One page, no build step: GitHub Pages serves `index.html` as 
 | `index.html` | The whole site: styles at the top, text in the middle, scripts at the bottom |
 | `models/*.bin` | The 3-D parts shown in the viewer, in a small format made from the STL files |
 | `projects/` | Pictures for the project browser (one per project, for example `aushadhi-drishti.jpg`) |
+| `me.jpg` | Your round profile photo (square picture, about 400 x 400). If it is missing, your initials show instead |
 | `og.png` | The picture shown when the link is shared (1200 x 630) |
 | `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` | The tab and home-screen icons |
 | `CNAME` | Points the site at falakpatel.com. Don't change it |
@@ -20,7 +21,7 @@ The bar at the top has the name (back to the top), section links, the menu butto
 
 ## Inside `index.html`
 
-1. **Styles** (`<style>` in the head). The last block, marked "Modern look", sets the font (Inter), colours, rounded cards and spacing; change the look there. Colours for light and dark mode are the variables at the top (`--bg`, `--fg`, `--link`).
+1. **Styles** (`<style>` in the head). The modern look is one block near the end of the styles, marked "Modern look"; deleting it brings back the plain version. The last block, marked "Modern look", sets the font (Inter), colours, rounded cards and spacing; change the look there. Colours for light and dark mode are the variables at the top (`--bg`, `--fg`, `--link`).
 2. **Text.** Plain HTML. Edit it like a document.
 3. **Dark / light switch** (first script at the bottom). Follows the phone or computer setting until the visitor picks one, then remembers the choice.
 4. **Project browser** (second script). The `projects` list at the top holds each project's text, facts, links and pictures. Arrow keys move through it, and the GitHub numbers in its bottom line are optional: if GitHub does not answer, the plain link stays.
