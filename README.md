@@ -8,11 +8,15 @@ My portfolio site. One page, no build step: GitHub Pages serves `index.html` as 
 |---|---|
 | `index.html` | The whole site: styles at the top, text in the middle, scripts at the bottom |
 | `models/*.bin` | The 3-D parts shown in the viewer, in a small format made from the STL files |
-| `projects/` | Pictures for the project browser |
+| `projects/` | Pictures for the project browser (one per project, for example `aushadhi-drishti.jpg`) |
 | `og.png` | The picture shown when the link is shared (1200 x 630) |
 | `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` | The tab and home-screen icons |
 | `CNAME` | Points the site at falakpatel.com. Don't change it |
 | `.nojekyll` | Tells GitHub Pages to serve files as they are |
+
+## Menu
+
+The bar at the top has the name (back to the top), section links, the menu button (three lines) and the dark / light switch. The menu lists every section and every project; a project link such as `#project-anukalpa` opens that project in the project browser. The menu script is the last `<script>` in `index.html`, and it builds the project list from the browser, so a new project shows up in the menu by itself.
 
 ## Inside `index.html`
 

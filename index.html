@@ -59,7 +59,26 @@ width:34px;height:34px;padding:0;cursor:pointer;display:inline-flex;align-items:
 .theme svg{width:18px;height:18px}
 .theme .sun,:root[data-theme=dark] .theme .moon{display:none}
 :root[data-theme=dark] .theme .sun{display:block}
-.theme-top{position:absolute;top:16px;right:16px}
+.theme-top{position:static}
+/* Top bar: name on the left; section links and the menu button on the right. */
+body{padding-top:0}
+.nav{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--chip);margin:0 -18px 26px;padding:0 18px}
+.nav-in{max-width:660px;margin:0 auto;height:52px;display:flex;align-items:center;gap:14px}
+.nav .me{font-weight:bold;color:var(--fg);text-decoration:none;margin-right:auto;white-space:nowrap}
+.nav .links a{margin-left:14px;font-size:15px}
+.nav .links a:visited{color:var(--link)}
+.menu{font:inherit;background:none;color:var(--fg);border:1px solid var(--chip);border-radius:4px;width:34px;height:34px;padding:0;cursor:pointer;
+display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.menu span{display:block;width:16px;height:1.5px;background:currentColor}
+.menu:hover{background:var(--chip-hover)}
+.drawer{position:absolute;left:0;right:0;top:52px;background:var(--bg);border-bottom:1px solid var(--chip);padding:14px 18px 20px}
+.drawer[hidden]{display:none}
+.drawer-in{max-width:660px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4px 28px}
+.drawer h3{font-size:13px;font-weight:normal;letter-spacing:.08em;text-transform:uppercase;margin:6px 0 4px;opacity:.7}
+.drawer a{display:block;padding:4px 0}
+.drawer a:visited{color:var(--link)}
+h2[id]{scroll-margin-top:64px}
+@media(max-width:620px){.nav .links{display:none}.drawer-in{grid-template-columns:1fr}}
 .viewer{position:relative;margin:4px 0 6px}
 canvas{display:block;width:100%;height:380px;cursor:grab;touch-action:none;background:var(--bg)}
 canvas:active{cursor:grabbing}
@@ -116,17 +135,36 @@ button{transition:background-color .15s,color .15s}
 </style>
 </head>
 <body>
+<header class="nav">
+<div class="nav-in">
+<a class="me" href="#top">Falak Ameesh Patel</a>
+<span class="links"><a href="#projects">Projects</a><a href="#stridemate">StrideMate</a><a href="#writing">Writing</a><a href="#contact">Contact</a></span>
+<button type="button" class="menu" id="menu-btn" aria-expanded="false" aria-controls="drawer" aria-label="Open menu"><span></span><span></span><span></span></button>
 <button type="button" class="theme theme-top" aria-label="Switch to dark mode" title="Switch to dark mode">
 <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
 <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
 </button>
-<div class="w">
+</div>
+<nav class="drawer" id="drawer" hidden aria-label="Site menu">
+<div class="drawer-in">
+<div><h3>Sections</h3>
+<a href="#projects">Projects</a>
+<a href="#stridemate">StrideMate exoskeleton</a>
+<a href="#other">Other work</a>
+<a href="#writing">Writing</a>
+<a href="#background">Background</a>
+<a href="#contact">Contact</a></div>
+<div><h3>Projects</h3><div id="drawer-projects"></div></div>
+</div>
+</nav>
+</header>
+<div class="w" id="top">
 
 <h1>Falak Ameesh Patel</h1>
 <p class="sub">Medical device design: assistive and diagnostic hardware.</p>
 <p class="meta">M.Tech Medical Device Innovation, IIT Hyderabad &middot; B.Pharm, SPPU &middot; Registered pharmacist &middot; Bharuch, Gujarat</p>
 
-<p class="icons">
+<p class="icons" id="contact">
 <a href="mailto:falakpat3l@gmail.com" title="Email" aria-label="Email">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14"/><path d="M2.5 6l9.5 6.5L21.5 6"/></svg></a>
 <a href="https://www.linkedin.com/in/falak-pat3l/" title="LinkedIn profile" aria-label="LinkedIn profile">
@@ -139,7 +177,7 @@ button{transition:background-color .15s,color .15s}
 
 <p>I build assistive medical hardware, and I am interested in why so little of it reaches patients. The device is rarely the hard part. The path from a working prototype to something a health system will actually buy and use is where most of these projects stop, including mine.</p>
 
-<h2>Projects</h2>
+<h2 id="projects">Projects</h2>
 <div class="browser" id="browser">
 <div class="cols">
 <div class="plist" role="tablist" aria-label="Projects" aria-orientation="vertical" id="plist"></div>
@@ -171,21 +209,21 @@ button{transition:background-color .15s,color .15s}
 
 <p>It did not reach anyone. Getting to production needed roughly &#8377;5 crore ($500,000 USD) in pre-seed capital against established competition, and that money was not available. The venture was wound down and the technology transferred to IIT Hyderabad under institute policy. A device that worked, at a fraction of the imported price, for a market of tens of thousands of patients in India. None of that was enough. Working out what the gap is actually made of is what I want to do next.</p>
 
-<h2>Other work</h2>
+<h2 id="other">Other work</h2>
 <ul>
 <li><strong>Transtibial and hip prostheses.</strong> Below-knee prosthesis assembly and hip joint geometry, modelled in Fusion 360.</li>
 <li><strong>Third Thumb.</strong> A 3-D printed extra digit, built to see how quickly someone learns to control a limb they did not grow.</li>
 <li><strong>Exoskeleton subassemblies.</strong> Motor housings, hip joints and sensor mounts, designed around parts available in India.</li>
 </ul>
 
-<h2>Writing</h2>
+<h2 id="writing">Writing</h2>
 <ul>
 <li><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=s6-Bs10AAAAJ&amp;citation_for_view=s6-Bs10AAAAJ:qjMakFHDy7sC">StrideMate: Wearable Lower-Limb Assistive Exoskeleton</a><br>FA Patel<br><em>Indian Institute of Technology, Hyderabad</em>, 2026</li>
 <li><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=s6-Bs10AAAAJ&amp;citation_for_view=s6-Bs10AAAAJ:UeHWp8X0CEIC">Application of QR Codes and Near-Field Communication Technology in Clinical Trials</a><br>FA Patel<br><em>Dr. D. Y. Patil College of Pharmacy, Akurdi (Affiliated to SPPU, formerly Pune University)</em>, 2023</li>
 </ul>
 <p><a href="https://scholar.google.com/citations?user=s6-Bs10AAAAJ&amp;hl=en">Google Scholar</a>.</p>
 
-<h2>Background</h2>
+<h2 id="background">Background</h2>
 <p>Biodesign, clinical immersion, device standards and regulation, and IP at IIT Hyderabad. Biostatistics and research methodology, and pharmaceutical jurisprudence, at SPPU. Before that, regulatory affairs (FDA and EMA dossiers), quality assurance under GMP, and market research using surveys and focus groups.</p>
 
 <footer><span>StrideMate IP is held by IIT Hyderabad. Shown here to demonstrate the work, not for commercial use.</span>
@@ -234,6 +272,11 @@ button{transition:background-color .15s,color .15s}
 (function () {
   var GH = "https://github.com/falakpat3l/";
   var projects = [
+    {name: "aushadhi-drishti",
+     text: "An open map of medicine access across India: Jan Aushadhi Kendras, government health centres and pharmacies for all 776 districts, with a score for where a new generic medicine store would help most. Built only from public data, on India's official map.",
+     facts: [["Built with", "JavaScript (MapLibre), Python"], ["Data", "PIB, Census 2011, NIC, OpenStreetMap"]],
+     links: [["Open the map", "https://falakpat3l.github.io/aushadhi-drishti/"], ["Source", GH + "aushadhi-drishti"]],
+     pics: [["projects/aushadhi-drishti.jpg", "aushadhi-drishti: districts of Gujarat coloured from well served (green) to underserved (red)"]]},
     {name: "padachar",
      text: "Offline step and food tracker for Android. It counts steps with the phone's own sensor and keeps everything on the phone: no internet permission, no account, no ads.",
      facts: [["Built with", "Kotlin, Jetpack Compose"], ["Status", "v0.7 alpha, Google Play testing next"]],
@@ -735,5 +778,41 @@ renderer.setAnimationLoop(() => {
 });
 </script>
 
+<script>
+// Menu: the button opens a list of sections and every project.
+// A project link (#project-anukalpa) opens that project in the browser above.
+(function () {
+  var btn = document.getElementById("menu-btn");
+  var drawer = document.getElementById("drawer");
+  function setOpen(open) {
+    drawer.hidden = !open;
+    btn.setAttribute("aria-expanded", String(open));
+    btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  }
+  btn.addEventListener("click", function () { setOpen(drawer.hidden); });
+  drawer.addEventListener("click", function (e) { if (e.target.closest("a")) setOpen(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") setOpen(false); });
+  document.addEventListener("click", function (e) { if (!drawer.hidden && !e.target.closest(".nav")) setOpen(false); });
+  var list = document.getElementById("drawer-projects");
+  document.querySelectorAll("#plist button").forEach(function (b) {
+    var a = document.createElement("a");
+    a.href = "#project-" + b.textContent.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    a.textContent = b.textContent;
+    list.appendChild(a);
+  });
+  function openFromHash() {
+    var m = location.hash.match(/^#project-(.+)$/);
+    if (!m) return;
+    document.querySelectorAll("#plist button").forEach(function (b) {
+      if (b.textContent.toLowerCase().replace(/[^a-z0-9]+/g, "-") === m[1]) {
+        b.click();
+        document.getElementById("projects").scrollIntoView();
+      }
+    });
+  }
+  window.addEventListener("hashchange", openFromHash);
+  openFromHash();
+})();
+</script>
 </body>
 </html>
