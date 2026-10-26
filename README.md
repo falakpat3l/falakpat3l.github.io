@@ -2,14 +2,14 @@
 
 My portfolio site. One page, no build step: GitHub Pages serves `index.html` as it is.
 
-The look: a quiet, near-black page with a serif (Newsreader) for reading and a monospace (JetBrains Mono) for the editor bits. At the top, a small editor types real excerpts from my own repos, with a vim-style status line. The logo is an eye whose iris is a capsule ("drishti" means vision).
+The look: a quiet, near-black page with a serif (Libre Baskerville) for reading and a monospace (JetBrains Mono) for the editor bits. At the top, a small editor types real excerpts from my own repos, with a vim-style status line. The logo is an eye whose iris is a capsule ("drishti" means vision).
 
 ## Files
 
 | File | What it is |
 |---|---|
 | `index.html` | The whole site: styles at the top, text in the middle, scripts at the bottom |
-| `fonts/` | Newsreader and JetBrains Mono, cut down to Latin letters (woff2), with their OFL licence files. No Google Fonts call |
+| `fonts/` | Libre Baskerville and JetBrains Mono, cut down to Latin letters (woff2), with their OFL licence files. No Google Fonts call |
 | `models/*.bin` | The 3-D parts shown in the viewer, in a small format made from the STL files |
 | `projects/` | Pictures for the project browser (one per project, for example `aushadhi-drishti.jpg`) |
 | `me.jpg` | Optional round profile photo (square, about 400 x 400). Until you add it, the initials FP show instead |
