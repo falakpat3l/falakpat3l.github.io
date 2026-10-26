@@ -2,37 +2,48 @@
 
 My portfolio site. One page, no build step: GitHub Pages serves `index.html` as it is.
 
+The look: a quiet, near-black page with a serif (Newsreader) for reading and a monospace (JetBrains Mono) for the editor bits. At the top, a small editor types real excerpts from my own repos, with a vim-style status line. The logo is an eye whose iris is a capsule ("drishti" means vision).
+
 ## Files
 
 | File | What it is |
 |---|---|
 | `index.html` | The whole site: styles at the top, text in the middle, scripts at the bottom |
+| `fonts/` | Newsreader and JetBrains Mono, cut down to Latin letters (woff2), with their OFL licence files. No Google Fonts call |
 | `models/*.bin` | The 3-D parts shown in the viewer, in a small format made from the STL files |
 | `projects/` | Pictures for the project browser (one per project, for example `aushadhi-drishti.jpg`) |
-| `me.jpg` | Your round profile photo (square picture, about 400 x 400). If it is missing, your initials show instead |
+| `me.jpg` | Optional round profile photo (square, about 400 x 400). Until you add it, the initials FP show instead |
 | `og.png` | The picture shown when the link is shared (1200 x 630) |
-| `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` | The tab and home-screen icons |
+| `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` | The tab and home-screen icons (the eye) |
 | `CNAME` | Points the site at falakpatel.com. Don't change it |
 | `.nojekyll` | Tells GitHub Pages to serve files as they are |
 
-## Menu
+## Colour themes
 
-The bar at the top has the name (back to the top), section links, the menu button (three lines) and the dark / light switch. The menu lists every section and every project; a project link such as `#project-anukalpa` opens that project in the project browser. The menu script is the last `<script>` in `index.html`, and it builds the project list from the browser, so a new project shows up in the menu by itself.
+Three themes: **night** (black with soft blue, like my apps), **paper** (warm off-white, like a printed report) and **clinic** (cool white with teal). The first visit follows the phone or computer (dark gives night, light gives paper). The switch in the top bar, the `:theme` button in the footer, or the command line changes it, and the choice is remembered in the browser. The colours are the variables at the top of the `<style>` block, one group per theme.
+
+## Command line
+
+Press `:` anywhere on a computer, type a command, press Enter:
+`:theme paper`, `:theme` (next theme), `:e anukalpa` (open a project), `:projects`, `:stridemate`, `:writing`, `:top`, `:help`.
 
 ## Inside `index.html`
 
-1. **Styles** (`<style>` in the head). The modern look is one block near the end of the styles, marked "Modern look"; deleting it brings back the plain version. The last block, marked "Modern look", sets the font (Inter), colours, rounded cards and spacing; change the look there. Colours for light and dark mode are the variables at the top (`--bg`, `--fg`, `--link`).
+1. **Styles** (`<style>` in the head): fonts, the three themes, then one block per part of the page.
 2. **Text.** Plain HTML. Edit it like a document.
-3. **Dark / light switch** (first script at the bottom). Follows the phone or computer setting until the visitor picks one, then remembers the choice.
-4. **Project browser** (second script). The `projects` list at the top holds each project's text, facts, links and pictures. Arrow keys move through it, and the GitHub numbers in its bottom line are optional: if GitHub does not answer, the plain link stays.
-5. **3-D viewer** (last script). It uses three.js from a CDN. Without internet (or WebGL) it shows a still picture of the shell instead. The script is split into six numbered, commented sections. The `MODELS` list at the top is the only part you normally touch.
+3. **Photo spot** (first script): shows `me.jpg`, or the initials if it is missing.
+4. **Themes** (second script).
+5. **Editor** (third script). `FILES` holds the code excerpts and their paths. Paste a new excerpt between the backticks to change one. It pauses when it is off screen, and with "reduce motion" switched on it shows the first file already typed. Screen readers get a one-line description instead.
+6. **Project browser.** The `projects` list holds each project's name, short tag, text, facts, links and pictures. Arrow keys, Home and End move through it. The GitHub numbers in its bottom line are optional: if GitHub does not answer, the plain link stays.
+7. **3-D viewer.** It uses three.js from a CDN. Without internet (or WebGL) it shows a still picture of the shell instead. The `MODELS` list at the top is the only part you normally touch.
+8. **Menu** and **command line** (last two scripts). The menu builds its project list from the browser, so a new project shows up there by itself.
 
 ## Common changes
 
-**Edit text.** Change it in `index.html`, then open the file in a browser to check.
+**Edit text.** Change it in `index.html`, then open the page in a browser to check.
 
 **Add a project.** Put its picture in `projects/` and add an entry to `projects` in the browser script.
 
 **Add a 3-D part.** Put `<name>.bin` in `models/` and add one line to `MODELS` in the viewer script, with the button label, the row (`exo` or `other`), and the CAD file name in the Stridemate_3D_files_IITH repo.
 
-**Preview locally.** In this folder run `python3 -m http.server`, then open `http://localhost:8000`. (Opening the file directly won't load the 3-D models.)
+**Preview locally.** In this folder run `python3 -m http.server`, then open `http://localhost:8000`. (Opening the file directly may skip the fonts and won't load the 3-D models.)
