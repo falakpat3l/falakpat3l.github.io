@@ -20,7 +20,7 @@ The bar at the top has the name (back to the top), section links, the menu butto
 
 ## Inside `index.html`
 
-1. **Styles** (`<style>` in the head). Colours for light and dark mode are the variables at the top (`--bg`, `--fg`, `--link`).
+1. **Styles** (`<style>` in the head). The last block, marked "Modern look", sets the font (Inter), colours, rounded cards and spacing; change the look there. Colours for light and dark mode are the variables at the top (`--bg`, `--fg`, `--link`).
 2. **Text.** Plain HTML. Edit it like a document.
 3. **Dark / light switch** (first script at the bottom). Follows the phone or computer setting until the visitor picks one, then remembers the choice.
 4. **Project browser** (second script). The `projects` list at the top holds each project's text, facts, links and pictures. Arrow keys move through it, and the GitHub numbers in its bottom line are optional: if GitHub does not answer, the plain link stays.
