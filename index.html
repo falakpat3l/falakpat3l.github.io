@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://falakpatel.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Falak Ameesh Patel, pharmacist and medical device engineer, with an eye-shaped logo on a black background">
+<meta property="og:image:alt" content="Falak Ameesh Patel, pharmacist and medical device engineer, with his logo, the Gujarati letter ફ (pha) turned on its side, on a black background">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@falakpat3l">
 <link rel="preload" href="fonts/libre-baskerville.woff2" as="font" type="font/woff2" crossorigin>
@@ -88,13 +88,8 @@ kbd{font-size:.85em;border:1px solid var(--line2);border-radius:4px;padding:0 5p
 .wrap{max-width:1000px;margin:0 auto;padding:0 28px}
 button{font:inherit;color:inherit}
 
-/* ---------- Eye mark: an almond eye whose iris is a capsule ---------- */
-.eye{display:block;overflow:visible}
-.eye .lid{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round}
-.eye .cap-a{fill:var(--accent)}
-.eye .cap-b{fill:none;stroke:currentColor;stroke-width:1.3}
-.eye .pill{transition:transform .5s cubic-bezier(.3,.7,.2,1);transform-origin:12px 12px}
-.brand:hover .pill,.eye-rule:hover .pill{transform:rotate(-180deg)}
+/* ---------- Logo: the Gujarati letter ફ (pha), my initial, turned on its side ---------- */
+.mark{display:block;flex:none;fill:currentColor}
 
 /* ---------- Top bar ---------- */
 .top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);
@@ -102,7 +97,7 @@ backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px 
 .top-in{height:54px;display:flex;align-items:center;gap:6px}
 .brand{display:flex;align-items:center;gap:10px;margin-right:auto;color:var(--fg);text-decoration:none;
 font:500 13px "JetBrains Mono",monospace;letter-spacing:.01em;white-space:nowrap}
-.brand .eye{width:26px;height:26px}
+.brand .mark{width:28px;height:16px;color:var(--accent)}
 .links{display:flex;gap:2px;margin-right:6px}
 .links a,.tbtn,.menu{font:12.5px "JetBrains Mono",monospace;color:var(--muted);text-decoration:none;
 padding:6px 9px;border-radius:6px;background:none;border:0;cursor:pointer}
@@ -244,8 +239,8 @@ background:var(--bg);border:1px solid var(--line2);border-radius:999px;opacity:0
 
 /* ---------- Footer ---------- */
 .foot{padding-top:30px;padding-bottom:56px;border-top:1px solid var(--line)}
-.eye-rule{display:flex;justify-content:center;color:var(--dim);margin:6px 0 34px}
-.eye-rule .eye{width:34px;height:34px}
+.mark-rule{display:flex;justify-content:center;color:var(--dim);margin:6px 0 34px}
+.mark-rule .mark{width:42px;height:24px}
 .foot-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
 .motto{font:13px "JetBrains Mono",monospace;color:var(--muted);margin:0}
 .cmd-btn{display:inline-flex;align-items:center;gap:10px;font:12.5px "JetBrains Mono",monospace;background:none;border:0;cursor:pointer;color:var(--muted);padding:4px 0}
@@ -327,7 +322,7 @@ opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;margin:0}
 <header class="top">
 <div class="wrap top-in">
 <a class="brand" href="#top" aria-label="Falak Ameesh Patel, back to top">
-<svg class="eye" viewBox="0 0 24 24" aria-hidden="true"><path class="lid" d="M1.8 12C5 6.6 8.4 4.6 12 4.6s7 2 10.2 7.4C19 17.4 15.6 19.4 12 19.4S5 17.4 1.8 12z"/><g class="pill"><g transform="rotate(-35 12 12)"><path class="cap-a" d="M12 9.6h-2.4a2.4 2.4 0 0 0 0 4.8H12z"/><path class="cap-b" d="M12 9.6h2.4a2.4 2.4 0 0 1 0 4.8H12z"/></g></g></svg>
+<svg class="mark" viewBox="-606 -520 791 448" aria-hidden="true"><path id="mark-path" transform="scale(1,-1)" d="M6.3 312.7Q6.3 264.5-1.4 223.5Q-9 182.5-23.3 151.9Q-37.5 121.4-58.3 104.6Q-79.1 87.8-104.6 87.8Q-134.7 87.8-150.6 108.5Q-166.6 129.2-166.6 153Q-166.6 182.6-151.8 204.2Q-137.1 225.8-115.7 239.8Q-94.2 253.8-74.5 260.1L-58 196.1L-99.3 199.8Q-94.7 214.4-91.7 226.6Q-88.7 238.8-88.7 252.6Q-88.7 302.5-112.2 327.8Q-135.7 353.1-171.1 353.1Q-193.7 353.1-213.5 342.6Q-233.3 332-248.5 315.2Q-263.6 298.5-271.4 279.1L-282.7 328.5Q-274.7 361.8-255.6 398.4Q-236.5 434.9-205 460.2Q-173.5 485.5-126.7 485.5Q-86.7 485.5-56.7 464.9Q-26.7 444.2-10.2 405.6Q6.3 366.9 6.3 312.7ZM184.5 474.9Q180.9 368.6 123.5 303.1Q66.1 237.6-23.7 207.1L-28.1 265.9Q26.5 294.9 45.2 345.4Q64 395.8 64 462.1Q64 474.4 63.5 485.7Q63 496.9 62 506.7ZM-216.9 127.7-323.9 72.5-356.4 255.7-398.5 464-291.4 519.2-257.8 334ZM-313 256Q-326 223.2-347.4 192.9Q-368.7 162.6-398.4 143.1Q-428 123.7-465.3 123.7Q-510.3 123.7-541.8 148.1Q-573.3 172.5-589.4 215.2Q-605.5 258-605.5 312.6Q-605.5 335.9-603.9 355.5Q-602.3 375-599.3 392.6L-481.4 417.9Q-483.7 403.4-485.7 385.2Q-487.7 367-487.7 346.2Q-487.7 297.6-468.6 268.7Q-449.5 239.8-413.2 239.8Q-393 239.8-377.3 249.4Q-361.6 258.9-349.1 275.8Q-336.5 292.6-325.1 312.3Z"/></svg>
 <span class="site">falakpatel.com</span></a>
 <nav class="links" aria-label="Sections"><a href="#projects">projects</a><a href="#stridemate">stridemate</a><a href="#writing">writing</a><a href="#contact">contact</a></nav>
 <button type="button" class="tbtn theme-cycle" aria-label="Colour theme"><span class="sw" aria-hidden="true"></span><span class="tname">night</span></button>
@@ -458,7 +453,7 @@ opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;margin:0}
 </main>
 
 <footer class="wrap foot">
-<div class="eye-rule" aria-hidden="true"><svg class="eye" viewBox="0 0 24 24"><path class="lid" d="M1.8 12C5 6.6 8.4 4.6 12 4.6s7 2 10.2 7.4C19 17.4 15.6 19.4 12 19.4S5 17.4 1.8 12z"/><g class="pill"><g transform="rotate(-35 12 12)"><path class="cap-a" d="M12 9.6h-2.4a2.4 2.4 0 0 0 0 4.8H12z"/><path class="cap-b" d="M12 9.6h2.4a2.4 2.4 0 0 1 0 4.8H12z"/></g></g></svg></div>
+<div class="mark-rule" aria-hidden="true"><svg class="mark" viewBox="-606 -520 791 448"><use href="#mark-path"/></svg></div>
 <div class="foot-row">
 <p class="motto">// medicine first, then the machine.</p>
 <button type="button" class="cmd-btn theme-cycle" aria-label="Colour theme"><span class="p" aria-hidden="true">&gt;_</span><span aria-hidden="true">:theme</span><span class="k tname" aria-hidden="true">night</span></button>

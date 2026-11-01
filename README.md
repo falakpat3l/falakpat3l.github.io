@@ -2,7 +2,7 @@
 
 My portfolio site. One page, no build step: GitHub Pages serves `index.html` as it is.
 
-The look: a quiet, near-black page with a serif (Libre Baskerville) for reading and a monospace (JetBrains Mono) for the editor bits. At the top, a small editor types real excerpts from my own repos, with a vim-style status line. The logo is an eye whose iris is a capsule ("drishti" means vision).
+The look: a quiet, near-black page with a serif (Libre Baskerville) for reading and a monospace (JetBrains Mono) for the editor bits. At the top, a small editor types real excerpts from my own repos, with a vim-style status line. The logo is the Gujarati letter ફ (pha), my initial, turned on its side.
 
 ## Files
 
@@ -14,7 +14,7 @@ The look: a quiet, near-black page with a serif (Libre Baskerville) for reading 
 | `projects/` | Pictures for the project browser (one per project, for example `aushadhi-drishti.jpg`) |
 | `me.jpg` | Optional round profile photo (square, about 400 x 400). Until you add it, the initials FP show instead |
 | `og.png` | The picture shown when the link is shared (1200 x 630) |
-| `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` | The tab and home-screen icons (the eye) |
+| `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` | The tab and home-screen icons (the logo) |
 | `CNAME` | Points the site at falakpatel.com. Don't change it |
 | `.nojekyll` | Tells GitHub Pages to serve files as they are |
 
