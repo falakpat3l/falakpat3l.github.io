@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src https://cdn.jsdelivr.net/npm/three@0.169.0/ 'sha256-vsYKVplxRCgmAtEWNq1EsQojcMPyT7WSKe7kZ8Qd0QU=' 'sha256-ZAUijKXu+qFl1kuCVuz6xkNM1PC2s7s+LhK1RG7DaiQ=' 'sha256-lWVPEcyOhr5V44ZjcI31MnPW5KtJ7/gXtFmvs/ilA0o=' 'sha256-5j9isqIEzz5yI5HdTTvXbw3vmckkzxq9fJR/fSQL0dM=' 'sha256-nyDgaF1yY+ayHF6zfQpGbxeSnqDC5ZhswUa+iH4GlZw=' 'sha256-+f20oEs3dtt3X1zuaVnOzhr/ANDF8uWZRQFK5TadVrM=' 'sha256-M+zBZRBnAM1HY+AZi2j2rsF1UTiW+bb6IF0qqMbCYBU=' 'sha256-fZmBfvHSihZqOVkZ6W7obzfhZ7Z2Bs7ycwz1j6S+QeU=' 'sha256-/NUbmMuLvU1OLZAOfvHDiIrCdyS3fwfReYjJkH4A7/U=' 'sha256-utu8CRdJZMRcIAa9678Y0v1/u/pK082HuM2eDLhBOfA='; style-src 'sha256-i5hmG+a4xXU1tglxgxHZJAZ1X/OCHGCpizkMDdq8pxo='; img-src 'self'; font-src 'self'; connect-src 'self' https://api.github.com; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Falak Ameesh Patel</title>
 <meta name="description" content="Falak Ameesh Patel: pharmacist and medical device engineer in Bharuch, Gujarat. Small offline health apps, and StrideMate, a walking-assist exoskeleton.">
 <meta name="author" content="Falak Ameesh Patel">
@@ -18,6 +20,7 @@
 <meta property="og:site_name" content="Falak Ameesh Patel">
 <meta property="og:locale" content="en_IN">
 <meta property="og:image" content="https://falakpatel.com/og.png">
+<meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Falak Ameesh Patel, pharmacist and medical device engineer, with his logo, the Gujarati letter ફ (pha) turned on its side, on a black background">
@@ -192,7 +195,7 @@ padding:6px 10px;border-radius:6px;cursor:pointer;color:var(--muted);font:12.5px
 .pane h3{font-weight:400;font-size:26px;line-height:1.15;margin:0 0 14px;letter-spacing:-.01em}
 .pic{position:relative;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;overflow:hidden;margin:0 0 8px;
 background:var(--surface);border-radius:8px;color:var(--fg)}
-.pic img{max-width:94%;max-height:92%;object-fit:contain;display:block;border-radius:4px}
+.pic img{max-width:94%;max-height:92%;width:auto;height:auto;object-fit:contain;display:block;border-radius:4px}
 .pic img.phone{height:92%;width:auto;border-radius:10px;box-shadow:0 10px 30px -12px rgba(0,0,0,.5)}
 .pic svg{width:66%;height:66%}
 .pic .missing{font-style:italic;padding:0 14px;text-align:center;color:var(--muted)}
@@ -220,8 +223,9 @@ canvas:focus-visible{outline-offset:-3px}
 .hint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);margin:0;padding:4px 12px;font:12px "JetBrains Mono",monospace;
 background:var(--bg);border:1px solid var(--line2);border-radius:999px;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap}
 .hint.on{opacity:1}
-.viewer .still{display:block;max-width:100%;max-height:320px;margin:16px auto}
+.viewer .still{display:block;max-width:100%;max-height:320px;width:auto;height:auto;margin:16px auto}
 .picks{margin:12px 0 4px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.picks[hidden]{display:none}
 .picks b{font:11px "JetBrains Mono",monospace;font-weight:400;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-right:6px;min-width:84px}
 .picks button{font:12px "JetBrains Mono",monospace;background:none;border:1px solid var(--line2);border-radius:999px;padding:4px 11px;color:var(--muted);cursor:pointer;transition:background-color .15s,color .15s,border-color .15s}
 .picks button:hover{color:var(--fg);border-color:var(--muted)}
@@ -314,6 +318,22 @@ opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;margin:0}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
+}
+/* ---------- Printing: dark ink on white paper in every theme, without the moving parts ---------- */
+@media print{
+  :root,:root[data-theme]{color-scheme:light;
+  --bg:#fff;--surface:#f3f3f3;--code:#fff;--line:#ddd;--line2:#ccc;
+  --fg:#111;--muted:#444;--dim:#777;--accent:#1f4a8a;--on-accent:#fff;--warm:#9c3b1a;
+  --k:#1f4a8a;--s:#8e3816;--c:#777;--n:#8e3816;--t:#2c5f6b;--f:#111;--shadow:none}
+  body{font-size:11pt;transition:none}
+  .top,.skip,.drawer,.ed,.viewer,.picks,#how,.shots button,.plist,.bar .keys,.keyhint,.cmd-btn,.cmdbar,.toast{display:none!important}
+  .hero{display:block;padding:0 0 24px}
+  .sec{display:block;padding:24px 0;break-inside:auto}
+  .sec>h2{position:static;margin:0 0 12px}
+  .sec>h2 .no{display:inline;margin:0 10px 0 0}
+  .browser .cols{display:block}
+  .pic,.pubs li{break-inside:avoid}
+  .pic{max-height:9cm}
 }
 </style>
 </head>
@@ -876,6 +896,16 @@ fun compute(prevCounter: Long?, prevBoot: Int, counter: Long, boot: Int): Long {
     pipeline: '<svg viewBox="0 0 240 90" fill="none" stroke="currentColor" stroke-width="1.1" font-family="' + SERIF + '" font-size="11"><g><rect x="4" y="30" width="46" height="26" rx="4"/><rect x="66" y="30" width="46" height="26" rx="4"/><rect x="128" y="30" width="46" height="26" rx="4"/><rect x="190" y="30" width="46" height="26" rx="4"/></g><g fill="currentColor" stroke="none" text-anchor="middle"><text x="27" y="47">topic</text><text x="89" y="47">image</text><text x="151" y="47">check</text><text x="213" y="47">caption</text><text x="120" y="12" font-style="italic">try again if it drifts</text></g><path d="M50 43h14M112 43h14M174 43h14M151 30V18H89v10"/><path d="M60 40l4 3-4 3M122 40l4 3-4 3M184 40l4 3-4 3M86 25l3 4 3-4"/></svg>'
   };
 
+  // Width and height of each picture in pixels, so the browser can save its space
+  // before it loads. A picture missing here still works.
+  var SIZES = {
+    "projects/padachar-home.jpg": [432, 960], "projects/padachar-activity.jpg": [432, 960],
+    "projects/padachar-food.jpg": [432, 960], "projects/anukalpa.jpg": [660, 900],
+    "projects/device-class.jpg": [660, 900], "projects/aushadhi-drishti.jpg": [660, 547],
+    "projects/qr-label.png": [840, 593], "projects/qr-app.jpg": [420, 620],
+    "projects/stridemate-shell.png": [395, 349], "projects/exo-dashboard.jpg": [1100, 720]
+  };
+
   var list = document.getElementById("plist");
   var pane = document.getElementById("pane");
   var tabs = [];
@@ -906,10 +936,11 @@ fun compute(prevCounter: Long?, prevBoot: Int, counter: Long, boot: Int): Long {
 
   function show() {
     var p = projects[current];
-    var pic = p.pics[shot];
+    var pic = p.pics[shot], size = SIZES[pic[0]];
     var art = pic[0].indexOf("svg:") === 0
       ? drawings[pic[0].slice(4)].replace("<svg ", '<svg role="img" aria-label="' + esc(pic[1]) + '" ')
-      : '<img src="' + esc(pic[0]) + '" alt="' + esc(pic[1]) + '"' + (pic[2] === "phone" ? ' class="phone"' : "") + ' loading="lazy">';
+      : '<img src="' + esc(pic[0]) + '" alt="' + esc(pic[1]) + '"' + (pic[2] === "phone" ? ' class="phone"' : "") +
+        (size ? ' width="' + size[0] + '" height="' + size[1] + '"' : "") + ' loading="lazy" decoding="async">';
     var html = "<h3>" + esc(p.name) + "</h3>";
     html += '<div class="pic">' + art + "</div>";
     if (p.pics.length > 1) {
@@ -996,26 +1027,30 @@ fun compute(prevCounter: Long?, prevBoot: Int, counter: Long, boot: Int): Long {
   // Live GitHub numbers for the status line. If GitHub does not answer (offline,
   // blocked, or over its hourly limit) the plain link stays. Numbers are kept for
   // this visit so moving around the site does not ask GitHub again.
+  // The numbers go in as plain text (never as HTML), and only if they really are numbers.
   var stats = document.getElementById("ghstats");
+  var ghLink = stats.querySelector("a");
+  function count(n) { return typeof n === "number" && isFinite(n) && n >= 0; }
   function showStats(u) {
-    if (!u || typeof u.public_repos !== "number" || typeof u.followers !== "number") return;
-    stats.innerHTML = '<a href="https://github.com/falakpat3l">github.com/falakpat3l</a> &middot; ' +
-      u.public_repos + " repos &middot; " + u.followers + (u.followers === 1 ? " follower" : " followers");
+    if (!u || !count(u.public_repos) || !count(u.followers)) return false;
+    stats.textContent = "";
+    stats.append(ghLink, " · " + u.public_repos + " repos · " + u.followers + (u.followers === 1 ? " follower" : " followers"));
+    return true;
   }
   var saved = null;
   try { saved = JSON.parse(sessionStorage.getItem("ghstats")); } catch (e) {}
-  if (saved) {
-    showStats(saved);
+  if (showStats(saved)) {
+    // shown from this visit's saved numbers
   } else if (window.fetch) {
     var controller = window.AbortController ? new AbortController() : null;
     if (controller) setTimeout(function () { controller.abort(); }, 6000);
     fetch("https://api.github.com/users/falakpat3l", controller ? {signal: controller.signal} : {})
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (u) {
-        if (!u || typeof u.public_repos !== "number") return;
+        if (!u) return;
         var keep = {public_repos: u.public_repos, followers: u.followers};
+        if (!showStats(keep)) return;
         try { sessionStorage.setItem("ghstats", JSON.stringify(keep)); } catch (e) {}
-        showStats(keep);
       })
       .catch(function () {});
   }
@@ -1032,6 +1067,7 @@ function viewerFallback(message) {
   still.className = "still";
   still.src = "projects/stridemate-shell.png";
   still.alt = "The StrideMate shell, from the CAD files";
+  still.width = 395; still.height = 349;
   canvas.replaceWith(still);
   document.getElementById("vpath").textContent = "projects/stridemate-shell.png";
   document.getElementById("picks-exo").hidden = true;
@@ -1047,8 +1083,25 @@ window.addEventListener("load", function () {
 </script>
 <script type="importmap">
 {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js",
-"three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}
+"three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"},
+"integrity":{
+"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js":"sha384-eCdgjbMm+jekI8fyaeCZ4Pnyg5k4Jn45w2qs3lfnAd5ES5IO4hKOXNisVBTyUzDO",
+"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/controls/OrbitControls.js":"sha384-aJoe4qqS/DgF2jh9njAuvA6QIveJYoCuYOfYjdFY8P3eawzmc9bEQ40jq2TvOyuP",
+"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/environments/RoomEnvironment.js":"sha384-9ItPPH2vgKbkvgrqTKq7ptGYe+WuAnqlZtlqleJW4/CJjnM5R7C+efD6iS7ADPJ9",
+"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/utils/BufferGeometryUtils.js":"sha384-wOjwauvHlJO7K6APr7FmMGH2nupQa3Ndzas9bJZhsAMOK055efJud8ns4aYmASKv",
+"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/lines/LineSegments2.js":"sha384-nm+9Od/cYIb15jGaA1U2Geoo18K/i9fF2fZ4KbI2rZydtfYxqwtWRlbvdVfiECU5",
+"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/lines/LineSegmentsGeometry.js":"sha384-HoyMSjfTC9HwQuRWVnmRh6XaXt8ZedLc03GaOyFmHtZNZd56Npb28nD2Km2fbibP",
+"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/lines/LineMaterial.js":"sha384-tnBmSeyngVndBaL3DnDMNFmR51vwEdRTfcm1PdIxcicWJwV735yij/oQO8kIUM3h"}}
 </script>
+<!-- The same seven three.js files, fetched early and checked against the same fingerprints.
+     If you move to a newer three.js, change the version and every sha384 value here and above. -->
+<link rel="modulepreload" crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js" integrity="sha384-eCdgjbMm+jekI8fyaeCZ4Pnyg5k4Jn45w2qs3lfnAd5ES5IO4hKOXNisVBTyUzDO">
+<link rel="modulepreload" crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/controls/OrbitControls.js" integrity="sha384-aJoe4qqS/DgF2jh9njAuvA6QIveJYoCuYOfYjdFY8P3eawzmc9bEQ40jq2TvOyuP">
+<link rel="modulepreload" crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/environments/RoomEnvironment.js" integrity="sha384-9ItPPH2vgKbkvgrqTKq7ptGYe+WuAnqlZtlqleJW4/CJjnM5R7C+efD6iS7ADPJ9">
+<link rel="modulepreload" crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/utils/BufferGeometryUtils.js" integrity="sha384-wOjwauvHlJO7K6APr7FmMGH2nupQa3Ndzas9bJZhsAMOK055efJud8ns4aYmASKv">
+<link rel="modulepreload" crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/lines/LineSegments2.js" integrity="sha384-nm+9Od/cYIb15jGaA1U2Geoo18K/i9fF2fZ4KbI2rZydtfYxqwtWRlbvdVfiECU5">
+<link rel="modulepreload" crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/lines/LineSegmentsGeometry.js" integrity="sha384-HoyMSjfTC9HwQuRWVnmRh6XaXt8ZedLc03GaOyFmHtZNZd56Npb28nD2Km2fbibP">
+<link rel="modulepreload" crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/lines/LineMaterial.js" integrity="sha384-tnBmSeyngVndBaL3DnDMNFmR51vwEdRTfcm1PdIxcicWJwV735yij/oQO8kIUM3h">
 <script type="module">
 // 3-D model viewer for the StrideMate parts.
 //
@@ -1366,11 +1419,18 @@ renderer.setAnimationLoop(() => {
   drawer.addEventListener("click", function (e) { if (e.target.closest("a")) setOpen(false); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !drawer.hidden) { setOpen(false); btn.focus(); } });
   document.addEventListener("click", function (e) { if (!drawer.hidden && !e.target.closest(".top")) setOpen(false); });
+  // The menu button only shows on narrow screens, so close the menu if the screen gets wider.
+  if (window.matchMedia) {
+    var wide = matchMedia("(min-width: 721px)");
+    if (wide.addEventListener) wide.addEventListener("change", function () { if (wide.matches) setOpen(false); });
+  }
   var list = document.getElementById("drawer-projects");
   document.querySelectorAll("#plist button").forEach(function (b) {
     var a = document.createElement("a");
     a.href = "#project-" + b.dataset.slug;
     a.textContent = b.dataset.name;
+    // Clicking the same project link twice does not change the address, so open it here too.
+    a.addEventListener("click", function () { if (location.hash === a.hash) openFromHash(); });
     list.appendChild(a);
   });
   function openFromHash() {
@@ -1430,6 +1490,7 @@ renderer.setAnimationLoop(() => {
     } else if (cmd === "e" || cmd === "edit" || cmd === "open") {
       var name = arg && window.pickProject ? window.pickProject(arg) : null;
       if (name) { go("projects"); say("opened " + name); }
+      else if (!arg) say("Which project? Try :e padachar");
       else say("No project called \"" + arg + "\". Try :e padachar");
     } else if (SECTIONS.indexOf(cmd) >= 0) {
       go(cmd);
