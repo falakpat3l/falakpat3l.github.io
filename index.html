@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src https://cdn.jsdelivr.net/npm/three@0.169.0/ 'sha256-vsYKVplxRCgmAtEWNq1EsQojcMPyT7WSKe7kZ8Qd0QU=' 'sha256-ZAUijKXu+qFl1kuCVuz6xkNM1PC2s7s+LhK1RG7DaiQ=' 'sha256-lWVPEcyOhr5V44ZjcI31MnPW5KtJ7/gXtFmvs/ilA0o=' 'sha256-5j9isqIEzz5yI5HdTTvXbw3vmckkzxq9fJR/fSQL0dM=' 'sha256-nyDgaF1yY+ayHF6zfQpGbxeSnqDC5ZhswUa+iH4GlZw=' 'sha256-+f20oEs3dtt3X1zuaVnOzhr/ANDF8uWZRQFK5TadVrM=' 'sha256-M+zBZRBnAM1HY+AZi2j2rsF1UTiW+bb6IF0qqMbCYBU=' 'sha256-fZmBfvHSihZqOVkZ6W7obzfhZ7Z2Bs7ycwz1j6S+QeU=' 'sha256-/NUbmMuLvU1OLZAOfvHDiIrCdyS3fwfReYjJkH4A7/U=' 'sha256-utu8CRdJZMRcIAa9678Y0v1/u/pK082HuM2eDLhBOfA='; style-src 'sha256-i5hmG+a4xXU1tglxgxHZJAZ1X/OCHGCpizkMDdq8pxo='; img-src 'self'; font-src 'self'; connect-src 'self' https://api.github.com; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src https://cdn.jsdelivr.net/npm/three@0.169.0/ 'sha256-vsYKVplxRCgmAtEWNq1EsQojcMPyT7WSKe7kZ8Qd0QU=' 'sha256-ZAUijKXu+qFl1kuCVuz6xkNM1PC2s7s+LhK1RG7DaiQ=' 'sha256-lWVPEcyOhr5V44ZjcI31MnPW5KtJ7/gXtFmvs/ilA0o=' 'sha256-5j9isqIEzz5yI5HdTTvXbw3vmckkzxq9fJR/fSQL0dM=' 'sha256-nyDgaF1yY+ayHF6zfQpGbxeSnqDC5ZhswUa+iH4GlZw=' 'sha256-+f20oEs3dtt3X1zuaVnOzhr/ANDF8uWZRQFK5TadVrM=' 'sha256-M+zBZRBnAM1HY+AZi2j2rsF1UTiW+bb6IF0qqMbCYBU=' 'sha256-fZmBfvHSihZqOVkZ6W7obzfhZ7Z2Bs7ycwz1j6S+QeU=' 'sha256-/NUbmMuLvU1OLZAOfvHDiIrCdyS3fwfReYjJkH4A7/U=' 'sha256-utu8CRdJZMRcIAa9678Y0v1/u/pK082HuM2eDLhBOfA='; style-src 'sha256-R8NgkxirhqxU/OFq+vfif5ZcwpIvG2xHjIqoH73nj2o='; img-src 'self'; font-src 'self'; connect-src 'self' https://api.github.com; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Falak Ameesh Patel</title>
 <meta name="description" content="Falak Ameesh Patel: pharmacist and medical device engineer in Bharuch, Gujarat. Small offline health apps, and StrideMate, a walking-assist exoskeleton.">
@@ -24,8 +24,6 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Falak Ameesh Patel, pharmacist and medical device engineer, with his logo, the Gujarati letter ફ (pha) turned on its side, on a black background">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@falakpat3l">
 <link rel="preload" href="fonts/libre-baskerville.woff2" as="font" type="font/woff2" crossorigin>
 <script>
 // Pick the colour theme before the page draws, so it never flashes.
@@ -268,13 +266,66 @@ background:var(--code);border:1px solid var(--line2);border-radius:8px;padding:8
 opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;margin:0}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
+/* ---------- 2026-11 visual pass: bigger type, outlined section numbers, cards ---------- */
+.hero{position:relative;isolation:isolate;padding:96px 0 104px;gap:56px;grid-template-columns:minmax(0,480px) minmax(0,1fr)}
+.hero::before{content:"";position:absolute;z-index:-2;inset:-54px -50vw 0;pointer-events:none;
+background:radial-gradient(60% 70% at 22% 18%,color-mix(in srgb,var(--accent) 13%,transparent),transparent 70%),
+radial-gradient(40% 50% at 82% 80%,color-mix(in srgb,var(--warm) 8%,transparent),transparent 70%)}
+.hero-mark{position:absolute;z-index:-1;right:-150px;top:10px;width:820px;height:auto;color:var(--accent);opacity:.07;pointer-events:none}
+.eyebrow{font:500 11.5px "JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+h1{font-size:clamp(42px,7vw,68px);line-height:1.02;letter-spacing:-.022em;margin:0 0 24px}
+h1 em{color:var(--accent)}
+.photo{width:124px;height:124px;box-shadow:0 0 0 5px var(--bg),0 0 0 7px var(--accent),0 18px 40px -14px color-mix(in srgb,var(--accent) 55%,transparent)}
+.lede{font-size:20px;line-height:1.55;margin:0 0 22px}
+.hl{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--accent) 30%,transparent) 62%);padding:0 1px}
+.contact{gap:8px}
+.contact a{padding:7px 14px 7px 12px}
+.contact li:first-child a{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.contact li:first-child a:hover{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.ed{border-radius:14px;transform:rotate(1.2deg);box-shadow:var(--shadow),0 0 0 1px color-mix(in srgb,var(--accent) 22%,transparent)}
+.sec{position:relative;padding:96px 0;grid-template-columns:200px minmax(0,700px)}
+.sec::before{content:"";position:absolute;left:0;top:-2px;width:72px;height:3px;background:var(--accent);border-radius:2px}
+.sec>h2{font-size:28px;letter-spacing:-.012em}
+.sec>h2 .no{font:italic 400 64px/1 "Libre Baskerville",serif;letter-spacing:0;color:transparent;-webkit-text-stroke:1.2px var(--accent);margin-bottom:12px}
+.statement{font-size:27px;line-height:1.42;letter-spacing:-.008em}
+.statement em{color:var(--fg);background:linear-gradient(transparent 64%,color-mix(in srgb,var(--warm) 30%,transparent) 64%)}
+.rq,.callout{margin:34px 0 0;border:1px solid var(--line2);border-radius:14px;padding:24px 28px 12px;background:var(--surface)}
+.rq{border-left:4px solid var(--accent)}
+.callout{margin:28px 0 0;border-left:4px solid var(--warm);background:color-mix(in srgb,var(--warm) 7%,var(--bg))}
+.lb{font:500 11.5px "JetBrains Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
+.callout .lb{color:var(--warm)}
+.rq .q{font-size:23px;line-height:1.4;margin:0 0 12px;letter-spacing:-.006em}
+.rq .m{color:var(--muted);font-size:15.5px}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:26px 0}
+.tiles div{border:1px solid var(--line2);border-radius:12px;padding:18px 16px 14px;background:var(--surface)}
+.tiles b{display:block;font-weight:400;font-size:20.5px;line-height:1.15;letter-spacing:-.01em;margin-bottom:8px;white-space:nowrap}
+.tiles span{display:block;font:11px/1.55 "JetBrains Mono",monospace;color:var(--muted)}
+.status-note{display:inline-block;border:1px solid color-mix(in srgb,var(--warm) 50%,transparent);border-radius:999px;padding:5px 14px;color:var(--fg)}
+.browser,.viewer{border-radius:14px;box-shadow:var(--shadow)}
+.pubs a{font-size:21px}
+@media (max-width:900px){
+  .hero{padding:56px 0 68px;grid-template-columns:minmax(0,1fr)}
+  .hero-mark{width:560px;right:-180px;top:auto;bottom:-20px}
+  .ed{transform:none}
+  .sec{grid-template-columns:minmax(0,1fr);padding:64px 0}
+  .sec>h2 .no{display:inline-block;font-size:34px;margin:0 12px 0 0;vertical-align:-4px}
+}
+@media (max-width:520px){
+  h1{font-size:40px}
+  .statement{font-size:21px}
+  .rq .q{font-size:19.5px}
+  .rq,.callout{padding:18px 18px 6px}
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tiles b{font-size:20px}
+}
+@media print{.hero::before,.hero-mark,.sec::before{display:none}.sec>h2 .no{color:#1f4a8a;-webkit-text-stroke:0;font-size:14pt}}
+
 /* ---------- Narrow screens ---------- */
 @media (max-width:900px){
   .hero{grid-template-columns:minmax(0,1fr);gap:40px;padding:48px 0 60px}
   .hero .intro{max-width:560px}
   .sec{grid-template-columns:minmax(0,1fr);gap:22px;padding:56px 0}
   .sec>h2{position:static}
-  .sec>h2 .no{display:inline;margin:0 10px 0 0}
 }
 @media (max-width:720px){
   .links{display:none}
@@ -342,7 +393,6 @@ opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;margin:0}
 <header class="top">
 <div class="wrap top-in">
 <a class="brand" href="#top" aria-label="Falak Ameesh Patel, back to top">
-<svg class="mark" viewBox="-606 -520 791 448" aria-hidden="true"><path id="mark-path" transform="scale(1,-1)" d="M6.3 312.7Q6.3 264.5-1.4 223.5Q-9 182.5-23.3 151.9Q-37.5 121.4-58.3 104.6Q-79.1 87.8-104.6 87.8Q-134.7 87.8-150.6 108.5Q-166.6 129.2-166.6 153Q-166.6 182.6-151.8 204.2Q-137.1 225.8-115.7 239.8Q-94.2 253.8-74.5 260.1L-58 196.1L-99.3 199.8Q-94.7 214.4-91.7 226.6Q-88.7 238.8-88.7 252.6Q-88.7 302.5-112.2 327.8Q-135.7 353.1-171.1 353.1Q-193.7 353.1-213.5 342.6Q-233.3 332-248.5 315.2Q-263.6 298.5-271.4 279.1L-282.7 328.5Q-274.7 361.8-255.6 398.4Q-236.5 434.9-205 460.2Q-173.5 485.5-126.7 485.5Q-86.7 485.5-56.7 464.9Q-26.7 444.2-10.2 405.6Q6.3 366.9 6.3 312.7ZM184.5 474.9Q180.9 368.6 123.5 303.1Q66.1 237.6-23.7 207.1L-28.1 265.9Q26.5 294.9 45.2 345.4Q64 395.8 64 462.1Q64 474.4 63.5 485.7Q63 496.9 62 506.7ZM-216.9 127.7-323.9 72.5-356.4 255.7-398.5 464-291.4 519.2-257.8 334ZM-313 256Q-326 223.2-347.4 192.9Q-368.7 162.6-398.4 143.1Q-428 123.7-465.3 123.7Q-510.3 123.7-541.8 148.1Q-573.3 172.5-589.4 215.2Q-605.5 258-605.5 312.6Q-605.5 335.9-603.9 355.5Q-602.3 375-599.3 392.6L-481.4 417.9Q-483.7 403.4-485.7 385.2Q-487.7 367-487.7 346.2Q-487.7 297.6-468.6 268.7Q-449.5 239.8-413.2 239.8Q-393 239.8-377.3 249.4Q-361.6 258.9-349.1 275.8Q-336.5 292.6-325.1 312.3Z"/></svg>
 <span class="site">falakpatel.com</span></a>
 <nav class="links" aria-label="Sections"><a href="#projects">projects</a><a href="#stridemate">stridemate</a><a href="#writing">writing</a><a href="#contact">contact</a></nav>
 <button type="button" class="tbtn theme-cycle" aria-label="Colour theme"><span class="sw" aria-hidden="true"></span><span class="tname">night</span></button>
@@ -367,8 +417,9 @@ opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;margin:0}
 <section class="hero" id="top">
 <div class="intro">
 <div class="photo" id="photo"><img src="me.jpg" alt="Falak Ameesh Patel" width="112" height="112"></div>
+<p class="eyebrow">Pharmacist &middot; Medical device engineer</p>
 <h1>Falak <em>Ameesh</em> Patel</h1>
-<p class="lede">Pharmacist and medical device engineer. I make small health tools that work offline and keep your data on your phone, and I designed StrideMate, a walking-assist exoskeleton.</p>
+<p class="lede">Pharmacist and medical device engineer. I make small health tools that work offline and keep your data on your phone, and I designed StrideMate, a walking-assist exoskeleton. <span class="hl">I study why working medical devices stall before they reach patients.</span></p>
 <dl class="creds">
 <dt>M.Tech</dt><dd>Medical Device Innovation, IIT Hyderabad</dd>
 <dt>B.Pharm</dt><dd>SPPU, and a registered pharmacist</dd>
@@ -378,6 +429,7 @@ opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;margin:0}
 <li><a href="mailto:falakpat3l@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M3 6.5l9 6.5 9-6.5"/></svg>email</a></li>
 <li><a href="https://www.linkedin.com/in/falak-pat3l/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3"/><path d="M7.5 10.5v6M7.5 7.3v.2M11.5 16.5v-6M11.5 13c0-1.6 1-2.6 2.5-2.6s2.5.9 2.5 2.6v3.5"/></svg>linkedin</a></li>
 <li><a href="https://scholar.google.com/citations?user=s6-Bs10AAAAJ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 4.2L2.2 9 12 13.8 21.8 9 12 4.2z"/><path d="M6.4 11.4V16c0 1.7 2.5 3 5.6 3s5.6-1.3 5.6-3v-4.6"/></svg>scholar</a></li>
+<li><a href="https://orcid.org/0009-0008-0047-3082"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M8.5 9.5v7M8.5 7v.2M12 16.5v-7h2.2a3.5 3.5 0 0 1 0 7H12z"/></svg>orcid</a></li>
 <li><a href="https://github.com/falakpat3l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.4c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 0 0-6 0C6.8 2.9 5.8 3.2 5.8 3.2a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4.4 9.6c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>github</a></li>
 <li><a href="https://linktr.ee/falakpatel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 21.5V13M6 8.5l6 4.5 6-4.5M12 2.5V13M5 13.5h14"/></svg>linktree</a></li>
 </ul>
@@ -396,6 +448,7 @@ opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;margin:0}
 <h2><span class="no">01</span>About</h2>
 <div>
 <p class="statement">I build assistive medical hardware, and I am interested in why so little of it reaches patients. The device is rarely the hard part. <em>The path from a working prototype to something a health system will actually buy and use is where most of these projects stop, including mine.</em></p>
+<div class="rq"><p class="lb">What I want to research</p><p class="q">What evidence do a small device team, a regulator and a hospital buyer each expect, and when?</p><p class="m">They expect different things at different stages, and small teams often find this out late. I want to follow devices from prototype to purchase, in India and one other country, by interviewing the people involved.</p></div>
 </div>
 </section>
 
@@ -416,7 +469,7 @@ opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;margin:0}
 <h2><span class="no">03</span>StrideMate</h2>
 <div>
 <p>A wearable lower-limb assistive exoskeleton. My M.Tech thesis at IIT Hyderabad, 2025-26, supervised by <a href="https://iith.ac.in/mae/safvan/">Prof. Safvan Palathingal</a> and <a href="https://iith.ac.in/bme/renujohn/">Prof. Renu John</a>.</p>
-<p class="status-note">Complete and on hold since October 2026. Firmware v1.4.0, gait dashboard v1.1.0 (final), CAD files under CC BY-NC-SA 4.0.</p>
+<p class="status-note">M.Tech thesis, completed 2026. Firmware v1.4.0, gait dashboard v1.1.0 (final), CAD files under CC BY-NC-SA 4.0.</p>
 
 <div class="viewer" id="viewer">
 <div class="vtop" aria-hidden="true"><span id="vpath">Stridemate_3D_files_IITH/stl</span><span>stl</span></div>
@@ -428,16 +481,16 @@ opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;margin:0}
 <p class="cap"><span id="cap" aria-live="polite">Loading&hellip;</span><br><span id="how">Drag to rotate, right-drag to pan, Ctrl/&#8984; + scroll to zoom, double-click to reset.</span><br>All CAD files: <a href="https://github.com/falakpat3l/Stridemate_3D_files_IITH">github.com/falakpat3l/Stridemate_3D_files_IITH</a> (CC BY-NC-SA 4.0).</p>
 
 <p>The design problem came from a month of clinical immersion at Kamineni Hospital, L.B. Nagar, in December 2024: orthopaedic and neurology wards, most working days, around 180 hours in total. Patients recovering from stroke or orthopaedic injury depend on a model that does not scale: one physiotherapist, a few patients per session, and no record of what happens between visits.</p>
-<p>The device runs two ESP32 controllers talking over I&sup2;C. A time-of-flight sensor on the shin gives a continuous velocity estimate; IMUs supply orientation and gait phase. Together they drive assistive torque during the swing phase. Housings are 3-D printed, thigh links are CNC-machined aluminium, and a browser dashboard logs gait data continuously rather than only moving the leg.</p>
+<p>Two ESP32 controllers read a distance sensor on the shin and motion sensors on the leg, and add torque during the swing phase. A browser dashboard logs gait data the whole time.</p>
 
-<dl class="specs">
-<dt>Mass</dt><dd>under 4 kg</dd>
-<dt>Assistive torque</dt><dd>about 10 N&middot;m, lateral</dd>
-<dt>Target price</dt><dd>&#8377;40,000, against &#8377;5 lakh to &#8377;60 lakh ($5000 to $60,000 USD) for imported equivalents</dd>
-<dt>Classification</dt><dd>Class B medical device</dd>
-</dl>
+<div class="tiles">
+<div><b>under 4 kg</b><span>Mass</span></div>
+<div><b>8 to 10 N&middot;m</b><span>Assistive torque, lateral</span></div>
+<div><b>&#8377;40,000</b><span>Target price, against &#8377;5 to 60 lakh for imports</span></div>
+<div><b>Class B</b><span>Under India's Medical Devices Rules 2017</span></div>
+</div>
 
-<p>It did not reach anyone. Getting to production needed roughly &#8377;5 crore ($500,000 USD) in pre-seed capital against established competition, and that money was not available. The venture was wound down and the technology transferred to IIT Hyderabad under institute policy. A device that worked, at a fraction of the imported price, for a market of tens of thousands of patients in India. None of that was enough. Working out what the gap is actually made of is what I want to do next.</p>
+<div class="callout"><p class="lb">What stopped it</p><p>It did not reach patients. Clinicians and buyers asked whether patients would be better off with it, and whether that was worth paying for. I had built a working device and mapped its regulatory pathway. I had not planned for that kind of evidence.</p><p>The IP sits with IIT Hyderabad under institute policy. What evidence each of them expects, and when, is what I want to study next.</p></div>
 </div>
 </section>
 
@@ -457,8 +510,8 @@ opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;margin:0}
 <h2><span class="no">05</span>Writing</h2>
 <div>
 <ul class="pubs">
-<li><span class="yr">2026</span><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=s6-Bs10AAAAJ&amp;citation_for_view=s6-Bs10AAAAJ:qjMakFHDy7sC">StrideMate: Wearable Lower-Limb Assistive Exoskeleton</a><span class="src">FA Patel. Indian Institute of Technology, Hyderabad</span></li>
-<li><span class="yr">2023</span><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=s6-Bs10AAAAJ&amp;citation_for_view=s6-Bs10AAAAJ:UeHWp8X0CEIC">Application of QR Codes and Near-Field Communication Technology in Clinical Trials</a><span class="src">FA Patel. Dr. D. Y. Patil College of Pharmacy, Akurdi (Affiliated to SPPU, formerly Pune University)</span></li>
+<li><span class="yr">2026</span><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=s6-Bs10AAAAJ&amp;citation_for_view=s6-Bs10AAAAJ:qjMakFHDy7sC">StrideMate: Wearable Lower-Limb Assistive Exoskeleton</a><span class="src">M.Tech thesis. FA Patel. Indian Institute of Technology, Hyderabad</span></li>
+<li><span class="yr">2023</span><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=s6-Bs10AAAAJ&amp;citation_for_view=s6-Bs10AAAAJ:UeHWp8X0CEIC">Application of QR Codes and Near-Field Communication Technology in Clinical Trials</a><span class="src">B.Pharm project report. FA Patel. Dr. D. Y. Patil College of Pharmacy, Akurdi (Affiliated to SPPU, formerly Pune University)</span></li>
 </ul>
 <p class="small">More on <a href="https://scholar.google.com/citations?user=s6-Bs10AAAAJ&amp;hl=en">Google Scholar</a>.</p>
 </div>
@@ -467,13 +520,12 @@ opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;margin:0}
 <section class="sec" id="background">
 <h2><span class="no">06</span>Background</h2>
 <div>
-<p>Biodesign, clinical immersion, device standards and regulation, and IP at IIT Hyderabad. Biostatistics and research methodology, and pharmaceutical jurisprudence, at SPPU. Before that, regulatory affairs (FDA and EMA dossiers), quality assurance under GMP, and market research using surveys and focus groups.</p>
+<p>Biodesign, clinical immersion, device standards and regulation, and IP at IIT Hyderabad. Biostatistics and research methodology, and pharmaceutical jurisprudence, at SPPU. Before that, regulatory affairs training (practice documentation on approval pathways for devices), quality assurance under GMP, and market research using surveys and focus groups.</p>
 </div>
 </section>
 </main>
 
 <footer class="wrap foot">
-<div class="mark-rule" aria-hidden="true"><svg class="mark" viewBox="-606 -520 791 448"><use href="#mark-path"/></svg></div>
 <div class="foot-row">
 <p class="motto">// medicine first, then the machine.</p>
 <button type="button" class="cmd-btn theme-cycle" aria-label="Colour theme"><span class="p" aria-hidden="true">&gt;_</span><span aria-hidden="true">:theme</span><span class="k tname" aria-hidden="true">night</span></button>
